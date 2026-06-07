@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苏婉清 — AI 产品运营（Sidebar Navy）</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #1e293b;
+    --sidebar-text: #cbd5e1;
+    --sidebar-heading: #60a5fa;
+    --sidebar-tag-bg: rgba(96, 165, 250, 0.15);
+    --sidebar-tag-text: #93c5fd;
+    --sidebar-border: #334155;
+    --ink: #1e293b;
+    --ink-light: #64748b;
+    --ink-muted: #999999;
+    --accent: #60a5fa;
+    --bg: #ffffff;
+    --border: #eeeeee;
+    --sans: 'Outfit', 'Noto Sans SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #f2f2f2;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .export-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .export-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .export-btn:hover {
+    background: #4a93e8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(96, 165, 250, 0.3);
+  }
+
+  .export-btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .export-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+  .resume {
+    max-width: 800px;
+    margin: 72px auto 60px;
+    background: var(--bg);
+    box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+    display: flex;
+    min-height: 1123px;
+  }
+
+  .sidebar {
+    width: 34%;
+    background: var(--sidebar-bg);
+    padding: 32px 20px;
+    color: var(--sidebar-text);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .sidebar .photo-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #334155;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  .sidebar .name {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .sidebar .title {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .sidebar .s-section {
+    margin-bottom: 18px;
+  }
+
+  .sidebar .s-heading {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sidebar-heading);
+    padding-bottom: 5px;
+    border-bottom: 0.5px solid var(--sidebar-border);
+    margin-bottom: 8px;
+  }
+
+  .sidebar .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: var(--sidebar-text);
+    word-break: break-all;
+  }
+
+  .sidebar .contact-icon {
+    color: var(--sidebar-heading);
+    font-size: 10px;
+    flex-shrink: 0;
+    width: 14px;
+    text-align: center;
+  }
+
+  .sidebar .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .sidebar .tag {
+    background: var(--sidebar-tag-bg);
+    color: var(--sidebar-tag-text);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .sidebar .edu-block {
+    margin-bottom: 8px;
+  }
+
+  .sidebar .edu-school {
+    font-weight: 600;
+    color: #e2e8f0;
+    font-size: 12px;
+  }
+
+  .sidebar .edu-detail {
+    font-size: 10.5px;
+    color: #94a3b8;
+    margin-top: 1px;
+  }
+
+  .sidebar .lang-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+    font-size: 11px;
+  }
+
+  .main {
+    width: 66%;
+    padding: 32px 28px;
+  }
+
+  .main .m-section {
+    margin-bottom: 18px;
+  }
+
+  .main .m-heading {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+
+  .main .summary {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink-light);
+  }
+
+  .main .summary strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .main .job {
+    margin-bottom: 14px;
+  }
+
+  .main .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .main .job-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .main .job-company {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .main .job-date {
+    font-size: 11px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .main .job-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .main .job-bullets li {
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    padding-left: 12px;
+    position: relative;
+    margin-bottom: 3px;
+  }
+
+  .main .job-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .main .job-bullets li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .main .project {
+    margin-bottom: 10px;
+  }
+
+  .main .project-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .main .project-badge {
+    font-size: 9px;
+    background: var(--accent);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .main .project-desc {
+    font-size: 11px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-top: 2px;
+  }
+
+  .main .project-tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .main .project-tags .tag {
+    font-size: 9.5px;
+    background: #f0f4ff;
+    color: #3b6fd4;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  @page { size: A4; margin: 0; }
+
+  @media print {
+    html, body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .export-bar { display: none !important; }
+    .resume {
+      margin: 0;
+      box-shadow: none;
+      max-width: none;
+      width: 100%;
+    }
+    .section-title, .m-heading, .job-header {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .job-header, .project, .edu-block {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="export-bar">
+  <button class="export-btn" onclick="exportPDF()">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zm-1 13H8v-2h4v2zm4-4H8v-2h8v2z"/></svg>
+    导出 PDF 简历
+  </button>
+  <span class="export-hint">⚠ 打印对话框中请选：另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」</span>
+</div>
+
+<div class="resume" id="resume">
+
+  <div class="sidebar">
+    <div class="photo-placeholder">苏</div>
+    <div class="name">苏婉清</div>
+    <div class="title">AI 产品运营</div>
+
+    <div class="s-section">
+      <div class="s-heading">联系方式</div>
+      <div class="contact-item"><span class="contact-icon">☎</span> 13800001234</div>
+      <div class="contact-item"><span class="contact-icon">✉</span> suwanqing@outlook.com</div>
+      <div class="contact-item"><span class="contact-icon">◎</span> 上海</div>
+      <div class="contact-item"><span class="contact-icon">🔗</span> linkedin.com/in/wanqing-su</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-heading">技能</div>
+      <div class="tag-list">
+        <span class="tag">Claude</span>
+        <span class="tag">ChatGPT</span>
+        <span class="tag">Midjourney</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Metabase</span>
+        <span class="tag">神策数据</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">飞书</span>
+        <span class="tag">Notion</span>
+        <span class="tag">GrowingIO</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Canva</span>
+      </div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-heading">语言</div>
+      <div class="lang-item"><span>英语</span><span>CET-6 560</span></div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-heading">教育</div>
+      <div class="edu-block">
+        <div class="edu-school">上海财经大学</div>
+        <div class="edu-detail">市场营销 · 学士 · 2017-2021</div>
+        <div class="edu-detail">GPA 3.6/4.0 · 校级优秀毕业生</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="m-section">
+      <div class="m-heading">个人简介</div>
+      <div class="summary">
+        <strong>3 年互联网产品运营经验</strong>，先后在美团和一家 AI 创业公司负责用户增长与内容运营。擅长通过数据分析驱动运营策略，具备从 0 到 1 搭建用户运营体系的实战经验。近一年深度参与 AI 产品运营，主导 AI 功能的用户教育与留存提升，<strong>核心产品 30 日留存率从 18% 提升至 34%</strong>。
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-heading">工作经历</div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <span class="job-title">AI 产品运营经理</span>
+            <span class="job-company"> · 星辰智能科技</span>
+          </div>
+          <span class="job-date">2023.06 - 至今</span>
+        </div>
+        <ul class="job-bullets">
+          <li><strong>用户增长：</strong>主导 AI 写作助手冷启动，通过小红书+即刻社区种草，3 个月新增注册用户 12 万，获客成本 2.8 元/人</li>
+          <li><strong>留存优化：</strong>搭建用户分层运营体系，针对不同频次用户设计差异化策略，30 日留存率从 18% 提升至 34%</li>
+          <li><strong>AI 功能推广：</strong>策划「AI 写作挑战赛」等活动，单场带来 8,000+ 新增活跃用户，DAU 峰值增长 220%</li>
+          <li><strong>数据体系：</strong>主导搭建运营数据看板（Metabase），定义核心指标，推动优化 Onboarding 流程</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <span class="job-title">用户运营专员</span>
+            <span class="job-company"> · 美团（到店事业群）</span>
+          </div>
+          <span class="job-date">2021.07 - 2023.05</span>
+        </div>
+        <ul class="job-bullets">
+          <li><strong>活动策划：</strong>累计策划 30+ 场促销活动，单场最高 GMV 突破 500 万</li>
+          <li><strong>用户运营：</strong>管理 50 万+ 用户生命周期，设计新用户 7 日激活链路，激活率从 35% 提升至 52%</li>
+          <li><strong>商家赋能：</strong>搭建商家运营 SOP，协助 200+ 商家优化线上店铺，订单量提升 25%</li>
+          <li><strong>数据分析：</strong>使用 SQL + Tableau 日常分析，输出周度运营复盘报告</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-heading">项目经验</div>
+
+      <div class="project">
+        <div class="project-name">AI 写作助手用户增长体系 <span class="project-badge">主导</span></div>
+        <div class="project-desc">从 0 搭建用户增长体系，覆盖获客、激活、留存、变现全链路。设计阶梯式会员体系与积分机制，付费转化率达 8.5%。</div>
+        <div class="project-tags">
+          <span class="tag">用户增长</span>
+          <span class="tag">AARRR</span>
+          <span class="tag">付费转化</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-name">AI 运营提效工具建设</div>
+        <div class="project-desc">引入 Claude/ChatGPT 辅助运营，搭建 Prompt 模板库覆盖文案、调研、竞品监控。人均产出效率提升 3 倍。</div>
+        <div class="project-tags">
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">运营提效</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-name">社区 UGC 内容生态搭建</div>
+        <div class="project-desc">主导社区冷启动，3 个月孵化 500+ 活跃创作者，UGC 日均新增 200+ 篇，停留时长占比从 5% 提升至 22%。</div>
+        <div class="project-tags">
+          <span class="tag">社区运营</span>
+          <span class="tag">UGC</span>
+          <span class="tag">创作者生态</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function exportPDF() {
+  window.print();
+}
+</script>
+
+</body>
+</html>
