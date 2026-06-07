@@ -114,9 +114,9 @@ AI：→ 生成完整的 HTML 简历
 
 **生成的简历效果：**
 
-| Editorial 杂志编辑风 | Clean Teal 清新青色 |
+| Editorial 杂志编辑风 | Sidebar Navy 深蓝双栏 |
 |:---:|:---:|
-| ![Editorial 简历示例](docs/images/demo-resume-editorial.png) | ![Clean Teal 简历示例](docs/images/demo-resume-clean-teal.png) |
+| ![Editorial 简历示例](docs/images/demo-resume-editorial.png) | ![Sidebar Navy 简历示例](docs/images/demo-resume-sidebar-navy.png) |
 
 ### 💌 Skill 3：求职信（cover-letter）
 
