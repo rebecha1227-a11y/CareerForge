@@ -83,7 +83,7 @@ CareerForge 是一套面向求职者的 AI Skill 工具组合，覆盖从简历�
 
 ### 3.1 触发条件
 
-用户提到以下关键词时触发：生成简历、写简历、做简历、简历制作、优化简历、改简历、简历美化、resume create、resume build、resume optimize、帮我做一份简历、简历排版。
+用户提到以下关键词时触发：生成简历、写简历、做简历、简历制作、优化简历、改简历、简历美化、resume create、resume build、resume optimize、帮我做一份简历、简历排版、简历模板、resume template、简历设计、resume design。当用户从 resume-match 衔接过来（已有优化后的 Markdown 简历），也应触发此 Skill 来生成 HTML+PDF 版本。
 
 ### 3.2 工作流程
 
@@ -93,20 +93,33 @@ CareerForge 是一套面向求职者的 AI Skill 工具组合，覆盖从简历�
 用户触发 resume-craft
     │
     ├─ 路径 A：从零生成
-    │   └─ 进入结构化提问流程
+    │   └─ 进入结构化提问流程（含模板选择）
     │
     └─ 路径 B：优化已有简历
-        └─ 读取简历 → 确认优化方向 → 生成
+        └─ 读取简历 → 确认优化方向 → 选择模板 → 生成
 ```
 
 ### 3.3 路径 A：从零生成 — 结构化提问清单
 
 AI 依次收集以下信息（分批提问，不要一次问完）：
 
-**第一轮：基础信息**
+**第一轮：基础信息 + 模板选择**
 - 目标岗位是什么？（如有 JD 请提供）
 - 生成中文简历还是英文简历？是否需要同时生成中英文两版？
 - 是否需要在简历上放照片？（如需要请上传）
+- 选择简历模板风格（展示 7 种选项）：
+
+| 编号 | 模板名称 | 风格特点 |
+|------|---------|---------|
+| 01 | **Editorial 杂志编辑风** | 经典文艺，奶油色底，绿色强调线，适合创意/文化类岗位 |
+| 02 | **Minimal 极简主义** | 纯白底，极少装饰，留白多，适合科技/设计/外企 |
+| 03 | **Sidebar Navy 深蓝双栏** | 左侧深蓝栏放技能和联系方式，右侧放经历，信息密度高 |
+| 04 | **Sidebar Dark 深灰左栏** | 左侧深灰栏+右侧白底，沉稳大气，适合管理/金融类 |
+| 05 | **Dark Header 深色头部** | 顶部深色块放姓名和联系方式，正文白底，对比醒目 |
+| 06 | **Clean Teal 清新青色** | 白底+青绿色条装饰，清新专业，适合大部分岗位 |
+| 07 | **Elegant 优雅对称** | 居中对称排版，衬线体为主，适合学术/高管/传统行业 |
+
+如果用户有自己喜欢的配色或强调色，也可以自定义——只需告知偏好颜色，在选定模板基础上替换即可。
 
 **第二轮：个人信息**
 - 姓名、联系方式（手机、邮箱）、所在城市
@@ -131,10 +144,10 @@ AI 依次收集以下信息（分批提问，不要一次问完）：
     - 「你之前的工作中有没有涉及XX方面的经验？哪怕是很小的部分？」
     - 「你有没有做过任何和XX相关的个人项目、学习或探索？」
     - 「你日常工作中用过XX工具/方法吗？哪怕不是主要职责？」
-  - **可以更好包装**：经历本身有价值但表述未突出亮点 → AI 主动建议重新表述
-    - 「你说的这段经历其实可以用XX角度来包装，和目标岗位更匹配，你觉得呢？」
+  - **可以更好表述**：经历本身有价值但表述未突出亮点 → AI 主动建议重新表述（忠于事实，只改表达方式）
+    - 「你说的这段经历其实可以用XX角度来描述，和目标岗位更匹配，你觉得准确吗？」
 
-深挖过程自然融入对话，不要让用户感觉在被审问，而是像一个有经验的职业顾问在帮用户发现自己没意识到的亮点。
+深挖过程自然融入对话，不要让用户感觉在被审问。每段经历最多追问 2-3 次，用户说"没有了"就不再纠缠。
 
 **第五轮：技能与证书**
 - 专业技能、工具
@@ -143,30 +156,37 @@ AI 依次收集以下信息（分批提问，不要一次问完）：
 
 **第六轮：确认与偏好**
 - 是否有需要特别突出的经历或技能
-- 排版风格偏好（如有）
-- 确认所有信息无误
+- 确认所有信息无误 → 开始生成
 
 ### 3.4 路径 B：优化已有简历
 
-- 读取用户上传的简历文件
-- 询问：优化方向是什么？（换岗位方向 / 美化排版 / 针对特定 JD 优化 / 内容精简）
-- 询问：是否需要在中文简历优化定稿后，同时生成对应的英文版简历？
-- 如有目标 JD，自动与 resume-match 的逻辑联动分析
-- 确认优化内容后生成中文简历
-- 如用户需要英文版：中文版定稿确认后，基于定稿内容生成英文版（不是逐字翻译，而是按英文简历的表达习惯重新撰写）
+1. 读取用户上传的简历文件（PDF / DOCX / 文字 / Markdown）
+2. 询问优化方向（可多选）：换岗位方向 / 美化排版 / 针对特定 JD 优化 / 内容精简
+3. 选择简历模板风格（展示 7 种选项，同路径 A）。如果用户对原有排版满意只想优化内容，可以跳过
+4. 询问：是否需要在中文简历优化定稿后，同时生成对应的英文版简历？
+5. 如有目标 JD，自动进行匹配度分析（参考 resume-match 的逻辑）
+6. 列出具体优化方案，等用户确认后再生成
+7. 生成中文简历
+8. 如用户需要英文版：中文版定稿确认后，基于定稿内容生成英文版
 
 ### 3.5 输出规范
 
 **双格式输出：**
-- HTML 文件：可在浏览器中查看，保留设计感
-- PDF 文件：通过 Playwright 从 HTML 生成，A4 尺寸，可直接投递
+- HTML 文件：可在浏览器中查看，保留设计感，内置导出 PDF 按钮
+- PDF 文件：通过 Playwright 从 HTML 生成（后台），或用户通过 HTML 中的导出按钮自行生成（`window.print()`）
+
+**7 种模板风格：**
+
+每种模板有独立的字体搭配、配色方案和布局特征，详见 `references/design-system.md`。用户也可在选定模板基础上自定义强调色。
 
 **排版硬性规则：**
-- 严格控制在两页以内
-- 字体搭配：衬线标题字体 + 无衬线正文字体（中文推荐 Noto Serif SC + Noto Sans SC）
-- 配色方案：主色（深色系）+ 强调色（青绿/藏青/深红中选一）+ 辅助灰色
+- 严格控制在两页以内（A4 纸）
+- 如果内容超出两页：
+  1. 先告知用户，列出哪些部分可以精简，询问用户是否同意
+  2. 用户同意精简 → 按用户意见删减内容
+  3. 用户不同意精简 → 适当缩小字号和间距来适配两页，但正文字号不得低于 11px
 - 间距标准：section 间距 20-24px，bullet 间距 1-4px，行高 1.55-1.7
-- 照片：如用户选择放照片，放在右上角，3:4 长方形，微圆角
+- 照片：单栏模板放右上角（3:4 长方形），双栏模板放左侧栏顶部（圆形）
 
 **内容结构顺序（按目标岗位调整优先级）：**
 1. 姓名 + 职位标题 + 联系方式（+ 可选照片）
@@ -177,16 +197,33 @@ AI 依次收集以下信息（分批提问，不要一次问完）：
 6. 技能与工具
 
 **双语简历规则：**
-- 如用户选择同时生成中英文简历，先定稿中文版，再基于中文版生成英文版
-- 英文简历不是中文简历的逐字翻译，而是按英文简历的表达习惯重新撰写（如用 action verbs 开头、避免中式英语）
+- 先定稿中文版，用户确认后再生成英文版
+- 英文版不是逐字翻译，而是按英文简历的表达习惯重新撰写（action verbs 开头、避免中式英语）
 - 两版简历保持相同的视觉设计，仅替换文字内容和字体
 
-### 3.6 技术实现要点
+### 3.6 HTML 导出功能（所有模板必须包含）
 
-- HTML 生成：内置简历模板 HTML/CSS（基于 frontend-design skill 的设计规范）
-- PDF 生成：使用 Playwright 将 HTML 转 PDF（与当前简历生成方式一致）
-- 文件读取：使用 file-reading / pdf-reading skill 读取用户上传的简历
-- 照片处理：使用 PIL 裁剪为 3:4 比例，压缩为 base64 嵌入 HTML
+每个生成的 HTML 简历都内置导出 PDF 按钮：
+
+- **导出方式**：`window.print()`（浏览器原生打印），生成可选中、可搜索、可被 HR 系统解析的真文字 PDF
+- **CSS 打印规则**：`@page { size: A4; margin: 0; }` + `print-color-adjust: exact`
+- **分页控制**：
+  - `.job` 和 `.section` 允许跨页（避免大段空白）
+  - `.project-card`、`.edu-item`、`.job-header` 禁止截断
+  - `.section-title` 和 `.job-header` 加 `page-break-after: avoid`（防止标题孤行）
+- **两页压缩**：在 `@media print` 中添加字号/间距缩小规则，确保 PDF 严格两页以内
+- 按钮旁提示用户：另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」
+
+### 3.7 技术实现要点
+
+- **模板参考**：`templates/resume-template.html`（Editorial 风格完整实现）
+- **视觉预览**：`templates/CareerForge-模板预览.html`（7 种模板的视觉效果）
+- **设计规范**：`references/design-system.md`（7 种模板的详细字体/配色/布局规范）
+- **PDF 生成**（后台）：`scripts/generate_pdf.py`，使用 Playwright 将 HTML 转为真文字 PDF
+- **PDF 导出**（前端）：HTML 内置 `window.print()` 按钮，用户可自行导出
+- **照片处理**：`scripts/process_photo.py`，使用 PIL 裁剪为 3:4 比例，压缩为 base64 嵌入 HTML
+- 如果 Playwright 未安装，提示用户运行：`pip install playwright && playwright install chromium`
+- 如果 PIL 未安装，提示用户运行：`pip install Pillow`
 
 ---
 
@@ -194,7 +231,7 @@ AI 依次收集以下信息（分批提问，不要一次问完）：
 
 ### 4.1 触发条件
 
-用户提到以下关键词时触发：cover letter、求职信、自荐信、申请信、写一封求职信、application letter。
+用户提到以下关键词时触发：cover letter、求职信、自荐信、申请信、写一封求职信、application letter、帮我写个求职信、投递邮件怎么写、怎么跟 HR 打招呼、boss直聘打招呼、招呼语、开场白、自我介绍信。当用户从 resume-match 或 resume-craft 衔接过来（已有简历和 JD 信息），也应触发。
 
 ### 4.2 输入要求
 
@@ -406,64 +443,62 @@ AI 从简历中提取与 JD 最匹配的 2-3 个亮点，根据场景生成：
 
 ## 7. 技术架构
 
-### 7.1 目录结构
+### 7.1 目录结构（实际）
 
 ```
-careerforge/
-├── SKILL.md                    # 主 Skill 文件（路由 + 总体说明）
-├── skills/
-│   ├── resume-match.md         # 匹配度分析详细指令
-│   ├── resume-craft.md         # 简历生成详细指令
-│   ├── cover-letter.md         # 求职信详细指令（纯文本输出，无需模板）
-│   └── mock-interview.md       # 模拟面试详细指令
-├── templates/
-│   ├── resume-template.html    # 简历 HTML 模板
-│   └── interview-report-template.html  # 面试报告 HTML 模板（可选）
-├── scripts/
-│   ├── generate_pdf.py         # HTML → PDF 转换脚本（Playwright）
-│   └── process_photo.py        # 照片裁剪/压缩/Base64 脚本
-└── references/
-    └── design-system.md        # 统一设计规范（字体/配色/间距）
+CareerForge/
+├── README.md
+├── CareerForge-架构文档.md
+├── resume-match.skill                    # Skill 1 打包文件
+├── resume-match/
+│   └── skills/resume-match/
+│       ├── SKILL.md
+│       └── references/scoring-guide.md
+├── resume-craft.skill                    # Skill 2 打包文件
+├── resume-craft/
+│   └── skills/resume-craft/
+│       ├── SKILL.md
+│       ├── templates/
+│       │   ├── resume-template.html      # Editorial 风格完整模板
+│       │   └── CareerForge-模板预览.html  # 7 种模板视觉预览
+│       ├── scripts/
+│       │   ├── generate_pdf.py           # Playwright HTML → PDF
+│       │   └── process_photo.py          # 照片裁剪/压缩/Base64
+│       └── references/
+│           └── design-system.md          # 7 种模板设计规范
+├── cover-letter.skill                    # Skill 3 打包文件
+├── cover-letter/
+│   └── skills/cover-letter/
+│       └── SKILL.md
+├── test-output/                          # 测试生成的示例简历
+└── .gitignore
 ```
 
-### 7.2 统一设计系统（design-system.md）
+### 7.2 设计系统（design-system.md）
 
-所有输出文件共享同一套视觉规范：
+支持 7 种简历模板风格，每种有独立的字体、配色、布局规范：
 
-- **字体**：Playfair Display + Source Sans 3（英文）/ Noto Serif SC + Noto Sans SC（中文）
-- **配色**：--ink: #1a1f2e / --accent: #2d6b5f / --accent-warm: #d4a853 / --cream: #faf9f7
-- **间距**：section 20-24px / 正文行高 1.55-1.7 / bullet 间距 1-4px
-- **纸张**：A4，上下边距 36px，左右 44px
-- **页数**：简历 ≤ 2页 / 求职信 = 纯文本（不生成文件） / 面试报告 = 对话内输出（可选生成 HTML）
+| 模板 | 字体 | 背景色 | 布局 |
+|------|------|--------|------|
+| Editorial | Playfair Display + Source Sans 3 | #faf9f7 奶油色 | 单栏 |
+| Minimal | DM Sans | #ffffff 纯白 | 单栏 |
+| Sidebar Navy | Outfit | #ffffff（侧栏 #1e293b） | 双栏 |
+| Sidebar Dark | Outfit | #ffffff（侧栏 #2c2c2c） | 双栏 |
+| Dark Header | DM Sans | #ffffff（头部 #1a1a2e） | 单栏 |
+| Clean Teal | Source Sans 3 | #ffffff | 单栏 |
+| Elegant | Libre Baskerville + DM Sans | #fcfcfa | 单栏 |
+
+通用规范：A4 纸张，简历 ≤ 2 页，section 间距 20-24px，正文行高 1.55-1.7。
+支持自定义配色：替换 `--accent` 和 `--accent-light` 即可。
 
 ### 7.3 PDF 生成方案
 
-统一使用 Playwright 进行 HTML → PDF 转换：
+**两种方式并存：**
 
-```python
-# scripts/generate_pdf.py 核心逻辑
-from playwright.sync_api import sync_playwright
+1. **后台生成**（Playwright）：Claude Code 在后台调用 `scripts/generate_pdf.py`，生成真文字 PDF，用户无需操作
+2. **前端导出**（window.print）：HTML 文件内置导出按钮，用户点击后通过浏览器打印功能自行生成 PDF
 
-def html_to_pdf(html_path, pdf_path):
-    with open(html_path, "r") as f:
-        html_content = f.read()
-    
-    # 移除屏幕端专属元素（导航条、动画等）
-    # 调整 margin、background、shadow 为打印模式
-    
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.set_content(html_content, wait_until="networkidle")
-        page.wait_for_timeout(2000)  # 等待字体加载
-        page.pdf(
-            path=pdf_path,
-            format="A4",
-            margin={"top": "0mm", "right": "0mm", "bottom": "0mm", "left": "0mm"},
-            print_background=True,
-        )
-        browser.close()
-```
+两种方式底层都是 Chrome 打印引擎，效果一致，生成的 PDF 文字可选中、可搜索、可被 HR 系统（ATS）解析。
 
 ### 7.4 照片处理方案
 
