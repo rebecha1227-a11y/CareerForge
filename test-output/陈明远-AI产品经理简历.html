@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈明远 — AI 产品经理</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1f2e;
+    --ink-light: #4a5568;
+    --ink-muted: #718096;
+    --accent: #2d6b5f;
+    --accent-light: #e8f4f0;
+    --accent-warm: #d4a853;
+    --cream: #faf9f7;
+    --card: #ffffff;
+    --border: #e2e0dc;
+    --border-light: #f0eee9;
+    --shadow: rgba(26, 31, 46, 0.06);
+    --serif: 'Playfair Display', 'Noto Serif SC', serif;
+    --sans: 'Source Sans 3', 'Noto Sans SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #f0efec;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .export-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(26, 31, 46, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .export-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .export-btn:hover {
+    background: #245a50;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(45, 107, 95, 0.3);
+  }
+
+  .export-btn:active { transform: translateY(0); }
+  .export-btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .export-hint { color: rgba(255,255,255,0.5); font-size: 13px; }
+
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26, 31, 46, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .loading-overlay.active { display: flex; }
+
+  .loading-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: var(--accent-warm);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .resume {
+    max-width: 800px;
+    margin: 72px auto 60px;
+    background: var(--cream);
+    box-shadow: 0 2px 40px var(--shadow), 0 0 0 1px var(--border-light);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resume::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm), var(--accent));
+  }
+
+  .header {
+    padding: 36px 44px 28px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 44px; right: 44px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .header-left { flex: 1; }
+
+  .name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  .name-zh {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 4px;
+    line-height: 1;
+  }
+
+  .name-en {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .title-row {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .title-main {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .title-divider {
+    width: 24px;
+    height: 1px;
+    background: var(--accent-warm);
+  }
+
+  .title-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+  }
+
+  .contact-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .contact-dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section {
+    padding: 20px 44px;
+    position: relative;
+  }
+
+  .section + .section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 44px; right: 44px;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--accent-warm);
+    flex-shrink: 0;
+  }
+
+  .summary {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  .summary strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--accent);
+    padding: 12px 18px;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-left-color: var(--accent-warm);
+    box-shadow: 0 4px 20px var(--shadow);
+    transform: translateX(2px);
+  }
+
+  .project-name {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .project-badge {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .job { margin-bottom: 16px; }
+  .job:last-child { margin-bottom: 0; }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .job-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .job-company {
+    font-weight: 300;
+    color: var(--ink-muted);
+    font-size: 13.5px;
+  }
+
+  .job-date {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 400;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  .job-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .job-bullets li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    font-weight: 300;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 1px;
+  }
+
+  .job-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  .job-bullets li strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .edu-item { margin-bottom: 10px; }
+  .edu-item:last-child { margin-bottom: 0; }
+
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .edu-degree {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .edu-school {
+    font-weight: 300;
+    color: var(--ink-muted);
+  }
+
+  .edu-date {
+    font-size: 12px;
+    color: var(--accent);
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  .edu-details {
+    list-style: none;
+    padding: 0;
+  }
+
+  .edu-details li {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    font-weight: 300;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .edu-details li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 16px;
+    align-items: baseline;
+  }
+
+  .skill-label {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .skill-content {
+    font-size: 13px;
+    color: var(--ink-light);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .skill-row { display: contents; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { animation: fadeUp 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  @media print {
+    html, body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background: var(--cream) !important;
+    }
+    .export-bar { display: none !important; }
+    .loading-overlay { display: none !important; }
+    .resume { margin: 0; box-shadow: none; max-width: 100%; background: var(--cream); }
+    .project-card:hover { transform: none; box-shadow: none; }
+    .project-card { transform: none !important; box-shadow: none !important; }
+    .section { animation: none; }
+    .project-card, .edu-item, .skills-grid, .job-header {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .section-title, .job-header {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .job-bullets li, .edu-details li, .summary, .project-desc {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="export-bar" id="exportBar">
+  <button class="export-btn" onclick="exportPDF()">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6zm5-6v4h2v-4h3l-4-4-4 4h3z"/></svg>
+    导出 PDF 简历
+  </button>
+  <span class="export-hint">⚠️ 打印对话框中请选：另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」</span>
+</div>
+
+<div class="resume" id="resume">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="name-row">
+          <span class="name-zh">陈明远</span>
+          <span class="name-en">Mingyuan Chen</span>
+        </div>
+        <div class="title-row">
+          <span class="title-main">AI 产品经理</span>
+          <span class="title-divider"></span>
+          <span class="title-sub">Vibe Coder · 业务流程自动化</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-item"><span class="contact-dot"></span>13912345678</span>
+          <span class="contact-item"><span class="contact-dot"></span>chenmyuan@gmail.com</span>
+          <span class="contact-item"><span class="contact-dot"></span>深圳</span>
+          <span class="contact-item"><span class="contact-dot"></span>github.com/mingyuan-chen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="section">
+    <div class="section-title">个人简介</div>
+    <div class="summary">
+      <strong>具备产品运营与 AI 工程双重背景的复合型人才</strong>，在字节跳动积累了 2.5 年产品运营经验后，转向 AI Native 开发方向。重度使用 Claude Code / Cursor / Codex 等 AI 编码工具 <strong>8 个月</strong>，独立完成多个内部提效工具的从 0 到 1 搭建。擅长拆解业务流程痛点，用 Vibe Coding 快速产出可落地的自动化解决方案。同时具备 Python / JavaScript 编程能力，能独立调试和修改 AI 生成代码。
+    </div>
+  </div>
+
+  <!-- AI Projects -->
+  <div class="section">
+    <div class="section-title">AI 项目经验</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-name">自动化选品工具 <span class="project-badge">内部提效</span></div>
+        <div class="project-desc">针对抖音电商选品流程，使用 Claude Code 独立搭建自动化选品工具。将原本依赖人工经验的选品判断转化为数据驱动的自动化筛选流程，覆盖商品数据抓取、竞品分析、利润率计算等核心环节。</div>
+        <div class="project-tags">
+          <span class="tag">Claude Code</span>
+          <span class="tag">Python</span>
+          <span class="tag">业务自动化</span>
+          <span class="tag">数据驱动</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">评论分析看板</div>
+        <div class="project-desc">使用 Claude Code 搭建用户评论分析看板，自动抓取商品评论数据，进行情感分析与关键词提取，生成可视化报表。帮助运营团队快速识别用户痛点和产品改进方向。</div>
+        <div class="project-tags">
+          <span class="tag">Vibe Coding</span>
+          <span class="tag">数据可视化</span>
+          <span class="tag">情感分析</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">AI 周报生成器 <span class="project-badge">团队在用</span></div>
+        <div class="project-desc">独立开发的团队提效工具，自动汇总飞书文档和项目管理工具中的本周工作数据，生成结构化周报。团队 15 人日常使用，将周报撰写时间从平均 40 分钟缩短至 5 分钟。</div>
+        <div class="project-tags">
+          <span class="tag">Cursor</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">团队提效</span>
+          <span class="tag">飞书集成</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">客服话术推荐系统</div>
+        <div class="project-desc">搭建智能客服话术推荐系统并接入企业微信，根据用户问题自动匹配最优回复话术。从需求定义、Prompt 设计到部署上线全程通过 Vibe Coding 独立完成。</div>
+        <div class="project-tags">
+          <span class="tag">Vibe Coding</span>
+          <span class="tag">企业微信集成</span>
+          <span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">飞书文档 MCP Server <span class="project-badge">开源</span></div>
+        <div class="project-desc">开源至 GitHub 的 MCP Server 工具，实现 AI Agent 与飞书文档的无缝对接，支持文档读取、搜索与内容提取。可复用于不同 AI 工作流场景。</div>
+        <div class="project-tags">
+          <span class="tag">MCP</span>
+          <span class="tag">开源</span>
+          <span class="tag">AI Agent</span>
+          <span class="tag">飞书 API</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Work Experience -->
+  <div class="section">
+    <div class="section-title">工作经历</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <span class="job-title">产品运营</span>
+          <span class="job-company"> · 字节跳动（抖音电商）</span>
+        </div>
+        <span class="job-date">2022.07 - 2024.12</span>
+      </div>
+      <ul class="job-bullets">
+        <li><strong>业务流程自动化：</strong>使用 Python 编写自动化报表脚本，将每日数据报表制作时间从 2 小时缩短至 10 分钟，效率提升 92%</li>
+        <li><strong>AI 工具落地：</strong>后期主导引入 Claude Code / Cursor 等 AI 编码工具，独立搭建自动化选品工具和评论分析看板，用于内部运营提效</li>
+        <li><strong>活动策划：</strong>策划并执行多场电商大促活动，负责从方案设计、资源协调到数据复盘的全流程</li>
+        <li><strong>数据分析：</strong>搭建运营数据监控体系，定期输出数据分析报告，为业务决策提供数据支撑</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <div class="section-title">教育背景</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div>
+          <span class="edu-degree">计算机科学与技术 学士</span>
+          <span class="edu-school"> · 华南理工大学</span>
+        </div>
+        <span class="edu-date">2018.09 - 2022.06</span>
+      </div>
+      <ul class="edu-details">
+        <li>GPA 3.5/4.0，校级二等奖学金</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section">
+    <div class="section-title">技能与工具</div>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-label">AI 工具</span>
+        <span class="skill-content">Claude Code / Cursor / Codex（8 个月重度使用）</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">编程能力</span>
+        <span class="skill-content">Python / JavaScript（能独立调试、修改 AI 生成代码）/ SQL</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">产品能力</span>
+        <span class="skill-content">需求拆解 / 数据分析 / 用户运营 / A/B 测试 / Prompt Engineering</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">工具</span>
+        <span class="skill-content">飞书 / Figma / Tableau / 企业微信 / MCP 协议</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">语言能力</span>
+        <span class="skill-content">英语（CET-6）</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function exportPDF() {
+  window.print();
+}
+</script>
+
+</body>
+</html>

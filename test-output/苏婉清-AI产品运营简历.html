@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苏婉清 — AI 产品运营</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #333333;
+    --ink-light: #555555;
+    --ink-muted: #999999;
+    --accent: #3a8f7f;
+    --accent-light: #e8f5f1;
+    --bg: #ffffff;
+    --border: #eeeeee;
+    --sans: 'Source Sans 3', 'Noto Sans SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #f2f2f2;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .export-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(51, 51, 51, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .export-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .export-btn:hover {
+    background: #2e7568;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(58, 143, 127, 0.3);
+  }
+
+  .export-btn:active { transform: translateY(0); }
+  .export-btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .export-hint { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+  .resume {
+    max-width: 800px;
+    margin: 72px auto 60px;
+    background: var(--bg);
+    box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Clean Teal: header 底部 accent 分割线 */
+  .header {
+    padding: 36px 44px 28px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .header-left { flex: 1; }
+
+  .name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+
+  .name-zh {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .name-en {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .title-row {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .title-main {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .title-divider {
+    width: 20px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  .title-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+  }
+
+  .contact-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .contact-dot {
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Clean Teal: section 标题全宽色条 */
+  .section {
+    padding: 20px 44px;
+    position: relative;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+    background: var(--accent);
+    margin: 0 -44px 14px;
+    padding: 6px 44px;
+  }
+
+  .summary {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  .summary strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Clean Teal: 项目卡片左侧 accent 边线 */
+  .project-card {
+    border-left: 2px solid var(--accent);
+    padding: 10px 16px;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    background: var(--accent-light);
+  }
+
+  .project-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .project-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  /* Clean Teal: 技能标签浅绿底 */
+  .tag {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .job { margin-bottom: 16px; }
+  .job:last-child { margin-bottom: 0; }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .job-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .job-company {
+    font-weight: 300;
+    color: var(--ink-muted);
+    font-size: 13.5px;
+  }
+
+  .job-date {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .job-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .job-bullets li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    font-weight: 300;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 2px;
+  }
+
+  .job-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .job-bullets li strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .edu-item { margin-bottom: 10px; }
+  .edu-item:last-child { margin-bottom: 0; }
+
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .edu-degree {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .edu-school {
+    font-weight: 300;
+    color: var(--ink-muted);
+  }
+
+  .edu-date {
+    font-size: 12px;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .edu-details {
+    list-style: none;
+    padding: 0;
+  }
+
+  .edu-details li {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    font-weight: 300;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .edu-details li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    align-items: baseline;
+  }
+
+  .skill-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .skill-content {
+    font-size: 13px;
+    color: var(--ink-light);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .skill-row { display: contents; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { animation: fadeUp 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  @media print {
+    html, body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background: var(--bg) !important;
+    }
+    .export-bar { display: none !important; }
+    .resume {
+      margin: 0;
+      box-shadow: none;
+      max-width: 100%;
+      background: var(--bg);
+    }
+    .project-card:hover { background: transparent; }
+    .section { animation: none; }
+    .project-card, .edu-item, .skills-grid, .job-header {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .section-title, .job-header {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .job-bullets li, .edu-details li, .summary, .project-desc {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="export-bar">
+  <button class="export-btn" onclick="exportPDF()">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6zm5-6v4h2v-4h3l-4-4-4 4h3z"/></svg>
+    导出 PDF 简历
+  </button>
+  <span class="export-hint">⚠️ 打印对话框中请选：另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」</span>
+</div>
+
+<div class="resume" id="resume">
+
+  <div class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="name-row">
+          <span class="name-zh">苏婉清</span>
+          <span class="name-en">Wanqing Su</span>
+        </div>
+        <div class="title-row">
+          <span class="title-main">AI 产品运营</span>
+          <span class="title-divider"></span>
+          <span class="title-sub">用户增长 · 数据驱动 · AI 工具落地</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-item"><span class="contact-dot"></span>13800001234</span>
+          <span class="contact-item"><span class="contact-dot"></span>suwanqing@outlook.com</span>
+          <span class="contact-item"><span class="contact-dot"></span>上海</span>
+          <span class="contact-item"><span class="contact-dot"></span>linkedin.com/in/wanqing-su</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">个人简介</div>
+    <div class="summary">
+      <strong>3 年互联网产品运营经验</strong>，先后在美团和一家 AI 创业公司负责用户增长与内容运营。擅长通过数据分析驱动运营策略，具备从 0 到 1 搭建用户运营体系的实战经验。近一年深度参与 AI 产品运营，主导 AI 功能的用户教育、场景化推广与留存提升，<strong>核心产品 30 日留存率从 18% 提升至 34%</strong>。熟练使用 Claude、ChatGPT 等 AI 工具辅助日常运营工作，具备 Prompt Engineering 基础能力。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">工作经历</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <span class="job-title">AI 产品运营经理</span>
+          <span class="job-company"> · 星辰智能科技（AI 创业公司）</span>
+        </div>
+        <span class="job-date">2023.06 - 至今</span>
+      </div>
+      <ul class="job-bullets">
+        <li><strong>用户增长：</strong>主导 AI 写作助手的冷启动运营，通过小红书+即刻社区种草策略，3 个月内新增注册用户 12 万，获客成本控制在 2.8 元/人</li>
+        <li><strong>留存优化：</strong>搭建用户分层运营体系，针对不同使用频次用户设计差异化触达策略，30 日留存率从 18% 提升至 34%</li>
+        <li><strong>AI 功能推广：</strong>策划「AI 写作挑战赛」等场景化活动，单场活动带来 8,000+ 新增活跃用户，活动期间 DAU 峰值增长 220%</li>
+        <li><strong>内容运营：</strong>搭建 AI 使用教程体系（50+ 篇图文 + 20 条短视频），用户自助解决率从 45% 提升至 72%，客服工单量下降 40%</li>
+        <li><strong>数据体系：</strong>主导搭建运营数据看板（使用 Metabase），定义核心指标（激活率、功能渗透率、付费转化率），推动产品团队优化 Onboarding 流程</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <span class="job-title">用户运营专员</span>
+          <span class="job-company"> · 美团（到店事业群）</span>
+        </div>
+        <span class="job-date">2021.07 - 2023.05</span>
+      </div>
+      <ul class="job-bullets">
+        <li><strong>活动策划：</strong>负责本地生活板块的营销活动策划与执行，累计策划 30+ 场促销活动，单场最高 GMV 突破 500 万</li>
+        <li><strong>用户运营：</strong>管理 50 万+ 用户的生命周期运营，设计新用户 7 日激活链路，激活率从 35% 提升至 52%</li>
+        <li><strong>商家赋能：</strong>搭建商家运营 SOP，协助 200+ 商家优化线上店铺，合作商家平均订单量提升 25%</li>
+        <li><strong>数据分析：</strong>使用 SQL + Tableau 进行日常数据分析，输出周度运营复盘报告，为策略调整提供数据支撑</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">项目经验</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-name">AI 写作助手用户增长体系 <span class="project-badge">主导</span></div>
+        <div class="project-desc">从 0 搭建 AI 产品的用户增长体系，覆盖获客、激活、留存、变现全链路。设计阶梯式会员体系与积分激励机制，付费转化率达 8.5%，高于行业平均水平（5-6%）。</div>
+        <div class="project-tags">
+          <span class="tag">用户增长</span>
+          <span class="tag">AARRR</span>
+          <span class="tag">付费转化</span>
+          <span class="tag">数据驱动</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">AI 运营提效工具建设</div>
+        <div class="project-desc">引入 Claude 和 ChatGPT 辅助日常运营工作，搭建 Prompt 模板库覆盖文案撰写、用户调研分析、竞品监控等场景。团队人均内容产出效率提升 3 倍，周报撰写时间从 2 小时缩短至 20 分钟。</div>
+        <div class="project-tags">
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">运营提效</span>
+          <span class="tag">AI 工具落地</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">社区 UGC 内容生态搭建</div>
+        <div class="project-desc">主导产品内社区模块的冷启动，设计创作者激励计划与内容审核机制。3 个月内孵化 500+ 活跃创作者，UGC 内容日均新增 200+ 篇，社区模块用户停留时长占比从 5% 提升至 22%。</div>
+        <div class="project-tags">
+          <span class="tag">社区运营</span>
+          <span class="tag">UGC</span>
+          <span class="tag">创作者生态</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">教育背景</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div>
+          <span class="edu-degree">市场营销 学士</span>
+          <span class="edu-school"> · 上海财经大学</span>
+        </div>
+        <span class="edu-date">2017.09 - 2021.06</span>
+      </div>
+      <ul class="edu-details">
+        <li>GPA 3.6/4.0，校级优秀毕业生</li>
+        <li>全国大学生市场调查与分析大赛二等奖</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">技能与工具</div>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-label">AI 工具</span>
+        <span class="skill-content">Claude / ChatGPT / Midjourney / Kimi（日常重度使用，具备 Prompt Engineering 能力）</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">数据分析</span>
+        <span class="skill-content">SQL / Tableau / Metabase / Google Analytics / 神策数据</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">运营工具</span>
+        <span class="skill-content">飞书 / Notion / 石墨文档 / 企业微信 / 有赞 / GrowingIO</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">内容创作</span>
+        <span class="skill-content">小红书运营 / 公众号排版 / Figma / Canva / 剪映</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">语言能力</span>
+        <span class="skill-content">英语（CET-6 560 分）</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function exportPDF() {
+  window.print();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+# 个人简历（含真实信息，不推到公开仓库）
+周静儿-*.html
+周静儿-*.pdf
+
+# 系统文件
+.DS_Store
+*.DS_Store
+
+# Claude Code 本地配置
+.claude/
+
+# Playwright 缓存
+.playwright-mcp/
+
+# Python
+__pycache__/
+*.pyc
+.env
