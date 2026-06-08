@@ -186,7 +186,9 @@ AI：面试马上开始，一共三轮——
 
 **输出效果：**
 
-![模拟面试报告](docs/images/demo-output-interview.png)
+| 总评 & 能力维度 | 逐题反馈 & 备考建议 |
+|:---:|:---:|
+| ![模拟面试报告1](docs/images/demo-output-interview1.png) | ![模拟面试报告2](docs/images/demo-output-interview2.png) |
 
 ---
 
