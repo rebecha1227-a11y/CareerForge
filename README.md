@@ -1,13 +1,32 @@
-# CareerForge — 接offer神器
+<div align="center">
 
-![Claude Code](https://img.shields.io/badge/Claude_Code-Skills-blueviolet?style=flat-square&logo=anthropic)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active_Development-orange?style=flat-square)
-![Skills](https://img.shields.io/badge/Skills-5%2F5_Ready-blue?style=flat-square)
+# 🔥 CareerForge — 接offer神器
 
-**AI 驱动的求职全链路工具包**，基于 AI Agent Skills 构建。从岗位搜索到简历优化再到模拟面试，让 AI 帮你拿到心仪的 offer。
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Skills-blueviolet?style=for-the-badge&logo=anthropic)](https://github.com/anthropics/claude-code)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Skills](https://img.shields.io/badge/Skills-5%2F5_Ready-blue?style=for-the-badge)](https://github.com/rebecha1227-a11y/CareerForge)
 
-兼容所有支持 Skills 的 AI Agent（Claude Code、Codex 等）。
+<br>
+
+### 投了 100 份简历，回复的只有 3 个——你值得更好的方式。
+
+<br>
+
+*我知道你在海投中一次次刷新邮箱，在 Boss 直聘上一个个点「立即沟通」，*
+*却换来一片已读不回的沉默。*
+*简历石沉大海，面试不知道怎么准备，求职信写了删、删了写。*
+
+*但好消息是——你不需要一个人扛。*
+*让 AI 帮你搜岗位、改简历、写求职信、模拟面试，*
+*把时间花在真正重要的事上。*
+
+<br>
+
+**AI 驱动的求职全链路工具包** · 从岗位搜索到模拟面试 · 开源免费
+
+兼容所有支持 Skills 的 AI Agent（Claude Code、Codex 等）
+
+</div>
 
 ---
 
