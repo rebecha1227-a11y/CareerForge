@@ -101,6 +101,10 @@ AI：→ 从简历提取方向，确认搜索条件（城市、硬性要求等�
    → 对感兴趣的岗位，一键跳转到匹配分析或写求职信
 ```
 
+**输出效果：**
+
+![岗位搜索 Excel 导出](docs/images/demo-output-jobhunt.png)
+
 ### 📊 Skill 2：简历匹配分析（resume-match）
 
 ```
