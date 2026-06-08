@@ -3,24 +3,25 @@
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skills-blueviolet?style=flat-square&logo=anthropic)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Active_Development-orange?style=flat-square)
-![Skills](https://img.shields.io/badge/Skills-4%2F4_Ready-blue?style=flat-square)
+![Skills](https://img.shields.io/badge/Skills-5%2F5_Ready-blue?style=flat-square)
 
-**AI 驱动的求职全链路工具包**，基于 AI Agent Skills 构建。从简历分析到模拟面试，让 AI 帮你拿到心仪的 offer。
+**AI 驱动的求职全链路工具包**，基于 AI Agent Skills 构建。从岗位搜索到简历优化再到模拟面试，让 AI 帮你拿到心仪的 offer。
 
 兼容所有支持 Skills 的 AI Agent（Claude Code、Codex 等）。
 
 ---
 
-## 包含 4 个 Skill
+## 包含 5 个 Skill
 
 | Skill | 功能 | 触发方式 |
 |-------|------|----------|
+| **job-hunt** | AI 岗位猎手，自动搜索 12+ 平台匹配岗位，支持 Boss 直聘浏览器联动，输出 Excel | `/job-hunt` 或 "帮我找工作" |
 | **resume-match** | 简历 × JD 智能匹配分析，输出匹配度评分与优化建议 | `/resume-match` 或 "帮我分析简历匹配度" |
 | **resume-craft** | 多模板简历生成与优化，7 种专业排版，输出 HTML + PDF | `/resume-craft` 或 "帮我做一份简历" |
 | **cover-letter** | 求职信 & 招聘软件打招呼消息生成 | `/cover-letter` 或 "帮我写求职信" |
 | **mock-interview** | 三轮 AI 模拟面试 + 逐题反馈报告 | `/mock-interview` 或 "帮我模拟面试" |
 
-> 💡 每个 Skill 独立可用，也可串联使用：分析匹配度 → 优化简历 → 写求职信 → 模拟面试
+> 💡 每个 Skill 独立可用，也可串联使用：搜岗位 → 分析匹配度 → 优化简历 → 写求职信 → 模拟面试
 
 ---
 
@@ -34,7 +35,7 @@
 curl -sL https://raw.githubusercontent.com/rebecha1227-a11y/CareerForge/main/install.sh | bash
 ```
 
-这会自动下载并安装所有 4 个 Skill 到 `./skills/` 目录。
+这会自动下载并安装所有 5 个 Skill 到 `./skills/` 目录。
 
 ### 方式二：克隆仓库
 
@@ -55,17 +56,19 @@ cd CareerForge
 ```
 your-project/
 └── skills/
-    ├── resume-match/        # Skill 1：匹配分析
+    ├── job-hunt/            # Skill 1：岗位搜索
+    │   └── SKILL.md
+    ├── resume-match/        # Skill 2：匹配分析
     │   ├── SKILL.md
     │   └── references/
-    ├── resume-craft/        # Skill 2：简历生成
+    ├── resume-craft/        # Skill 3：简历生成
     │   ├── SKILL.md
     │   ├── templates/       # 7 种 HTML 模板
     │   ├── scripts/         # PDF 生成 & 照片处理
     │   └── references/      # 设计规范
-    ├── cover-letter/        # Skill 3：求职信
+    ├── cover-letter/        # Skill 4：求职信
     │   └── SKILL.md
-    └── mock-interview/      # Skill 4：模拟面试
+    └── mock-interview/      # Skill 5：模拟面试
         └── SKILL.md
 ```
 
@@ -75,6 +78,7 @@ your-project/
 |------|------|----------|
 | Playwright | 后台生成 PDF（不装也能用浏览器导出） | `pip install playwright && playwright install chromium` |
 | Pillow | 简历照片裁剪压缩 | `pip install Pillow` |
+| openpyxl | 岗位搜索结果导出 Excel | `pip install openpyxl` |
 
 ---
 
@@ -82,7 +86,22 @@ your-project/
 
 安装完成后，打开 Claude Code（或其他支持 Skills 的 AI Agent），用自然语言或斜杠命令触发对应 Skill。
 
-### 📊 Skill 1：简历匹配分析（resume-match）
+### 🔍 Skill 1：岗位搜索（job-hunt）
+
+```
+你：/job-hunt（或"帮我找工作"、"搜一下合适的岗位"）
+AI：请提供你的简历，或者告诉我你的职业方向
+你：[上传简历]
+AI：→ 从简历提取方向，确认搜索条件（城市、硬性要求等）
+   → 自动展开 10-20 组搜索关键词
+   → 并行搜索 12+ 个平台（Boss直聘、猎聘、智联、拉勾、LinkedIn、V2EX...）
+   → 如果有 Chrome MCP 插件，还能直接搜 Boss 直聘已保存的岗位分组
+   → 输出 50-200+ 个匹配岗位（🟢高度匹配 / 🟡基本匹配 / 🟠可以尝试）
+   → 可导出 Excel 表格，带颜色标注和筛选器
+   → 对感兴趣的岗位，一键跳转到匹配分析或写求职信
+```
+
+### 📊 Skill 2：简历匹配分析（resume-match）
 
 ```
 你：/resume-match（或"帮我分析一下简历和 JD 的匹配度"）
@@ -98,7 +117,7 @@ AI：→ 输出多维度匹配评分（硬技能、软技能、经验、教育�
 
 ![匹配分析报告](docs/images/demo-output-match.png)
 
-### 📝 Skill 2：简历生成（resume-craft）
+### 📝 Skill 3：简历生成（resume-craft）
 
 ```
 你：/resume-craft（或"帮我做一份简历"）
@@ -118,7 +137,7 @@ AI：→ 生成完整的 HTML 简历
 |:---:|:---:|
 | ![Editorial 简历示例](docs/images/demo-resume-editorial.png) | ![Sidebar Navy 简历示例](docs/images/demo-resume-sidebar-navy.png) |
 
-### 💌 Skill 3：求职信（cover-letter）
+### 💌 Skill 4：求职信（cover-letter）
 
 ```
 你：/cover-letter（或"帮我写一封求职信"）
@@ -134,7 +153,7 @@ AI：→ 基于你的简历和 JD，生成 300-500 字的求职信
 
 ![求职信输出](docs/images/demo-output-cover.png)
 
-### 🎤 Skill 4：模拟面试（mock-interview）
+### 🎤 Skill 5：模拟面试（mock-interview）
 
 ```
 你：/mock-interview（或"帮我模拟面试"）
@@ -188,25 +207,31 @@ AI：面试马上开始，一共三轮——
 ## 完整求职流程示例
 
 ```
-第 1 步：分析匹配度
+第 1 步：搜岗位
+  你："帮我找工作" 或 /job-hunt
+  AI → 分析简历，展开 10-20 组关键词，搜 12+ 个平台
+     → 输出 100+ 匹配岗位，导出 Excel
+       ↓ 挑到感兴趣的岗位
+
+第 2 步：分析匹配度
   你："帮我分析简历和这个 JD 的匹配度"
   AI → 评分 72 分（B 级），硬技能匹配但项目经验不够突出
        ↓ 建议优化简历
 
-第 2 步：优化简历
+第 3 步：优化简历
   你："那帮我优化一下简历"
   AI → 自动衔接上一步的分析结果
      → 针对 JD 重写项目经历描述，突出匹配的关键词
      → 生成 HTML + PDF
        ↓ 简历搞定，准备投递
 
-第 3 步：写求职信
+第 4 步：写求职信
   你："帮我写一封邮件求职信"
   AI → 基于优化后的简历 + JD，生成个性化求职信
      → 不是简历复述，突出独特价值
        ↓ 投递材料齐了，准备面试
 
-第 4 步：模拟面试
+第 5 步：模拟面试
   你："帮我模拟面试"
   AI → 三轮仿真面试（HR → 业务 → 高管）
      → 面试报告 + 逐题反馈 + 备考建议

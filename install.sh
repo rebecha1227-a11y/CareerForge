@@ -2,7 +2,7 @@
 
 set -e
 
-SKILLS="resume-match resume-craft cover-letter mock-interview"
+SKILLS="resume-match resume-craft cover-letter mock-interview job-hunt"
 REPO="https://github.com/rebecha1227-a11y/CareerForge/raw/main"
 
 echo "🚀 CareerForge — 安装所有 Skills"

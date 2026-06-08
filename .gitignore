@@ -6,11 +6,18 @@
 .DS_Store
 *.DS_Store
 
+# 本地安装的 Skills（install.sh 生成，源文件在各 skill 子目录里）
+/skills/
+
 # Claude Code 本地配置
 .claude/
 
 # Playwright 缓存
 .playwright-mcp/
+
+# 岗位搜索结果（含个人信息）
+岗位搜索结果_*.xlsx
+.~岗位搜索结果_*.xlsx
 
 # Python
 __pycache__/
