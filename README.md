@@ -155,7 +155,9 @@ AI：→ 基于你的简历和 JD，生成 300-500 字的求职信
 
 **输出效果：**
 
-![求职信输出](docs/images/demo-output-cover.png)
+| 邮件投递版 | 招聘软件打招呼版 |
+|:---:|:---:|
+| ![求职信-邮件版](docs/images/demo-output-cover1.png) | ![求职信-打招呼版](docs/images/demo-output-cover2.png) |
 
 ### 🎤 Skill 5：模拟面试（mock-interview）
 
