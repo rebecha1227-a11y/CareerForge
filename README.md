@@ -64,26 +64,33 @@
 
 ### 方式一：npx 一键安装（推荐 ⭐）
 
+**找工作、做简历这种日常使用，推荐装到「全局」（加 `-g`），这样在哪个文件夹打开 Agent 都能用：**
+
 ```bash
-npx skills add rebecha1227-a11y/CareerForge
+npx skills add rebecha1227-a11y/CareerForge -g
 ```
 
 > 基于 [Vercel Skills CLI](https://github.com/vercel-labs/skills)，自动检测你安装了哪些 Agent（Claude Code、Codex、Cursor、Gemini CLI、Windsurf 等 **50+ 种**），一次安装全部搞定。
 >
 > 需要 Node.js 18+。没有 Node？用下面的方式二。
 
-**指定安装到某个 Agent：**
+**装到哪个文件夹？** 以 Claude Code 为例：
+
+| 安装方式 | 命令 | 实际位置 |
+|---------|------|----------|
+| **全局**（推荐） | `... -g` | Mac: `~/.claude/skills/`<br>Windows: `C:\Users\你的用户名\.claude\skills\` |
+| **项目级** | 不加 `-g` | 你跑命令时所在文件夹下的 `.claude/skills/`（换个文件夹就用不了）|
+
+> 其他 Agent 的全局目录类似：Codex 是 `~/.codex/skills/`、Gemini 是 `~/.gemini/skills/`，CLI 会自动放到对应位置。
+
+**只想装到某个指定的 Agent：**
 
 ```bash
-npx skills add rebecha1227-a11y/CareerForge -a claude-code
-npx skills add rebecha1227-a11y/CareerForge -a codex -a cursor
+npx skills add rebecha1227-a11y/CareerForge -g -a claude-code
+npx skills add rebecha1227-a11y/CareerForge -g -a codex -a cursor
 ```
 
-**全局安装（所有项目可用）：**
-
-```bash
-npx skills add rebecha1227-a11y/CareerForge -g
-```
+**装好了怎么验证？** 打开 Claude Code 输入 `/`，能看到 `/job-hunt`、`/resume-craft` 等命令，或直接说「帮我找工作」能触发，就成功了 🎉
 
 ### 方式二：Shell 脚本安装
 
