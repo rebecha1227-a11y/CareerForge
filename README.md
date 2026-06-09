@@ -376,6 +376,12 @@ AI：→ 六维度评分对比（经济价值、成长价值、平台价值、�
    → 可生成 HTML 可视化决策报告
 ```
 
+**输出效果：**
+
+| 对比总览 & 雷达图 | 六维度详细评分 | 薪资谈判作战室 |
+|:---:|:---:|:---:|
+| ![Offer决策报告1](docs/images/demo-output-offer1.png) | ![Offer决策报告2](docs/images/demo-output-offer2.png) | ![Offer决策报告3](docs/images/demo-output-offer3.png) |
+
 ---
 
 ## 7 种简历模板
