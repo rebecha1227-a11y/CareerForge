@@ -5,7 +5,7 @@
 set -e
 
 REPO_RAW="https://raw.githubusercontent.com/rebecha1227-a11y/CareerForge/main"
-SKILLS="job-hunt resume-match resume-craft cover-letter mock-interview"
+SKILLS="job-hunt resume-match resume-craft cover-letter mock-interview offer-decision"
 
 echo ""
 echo "🔥 CareerForge — AI 求职工具包"
@@ -95,13 +95,14 @@ for entry in "${detected[@]}"; do
   echo ""
 done
 
-echo "✅ 安装完成！已安装 5 个 Skill："
+echo "✅ 安装完成！已安装 6 个 Skill："
 echo ""
 echo "  📋 job-hunt        — 岗位搜索（30+ 平台，全球覆盖）"
 echo "  📊 resume-match    — 简历匹配分析"
 echo "  📝 resume-craft    — 简历生成（7 种模板）"
 echo "  💌 cover-letter    — 求职信生成"
 echo "  🎤 mock-interview  — 模拟面试（三轮）"
+echo "  🎯 offer-decision  — Offer 决策 + 薪资谈判"
 echo ""
 echo "现在打开你的 AI Agent，说「帮我找工作」就能用了 🎉"
 echo ""

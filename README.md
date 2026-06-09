@@ -4,7 +4,7 @@
 
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Skills-blueviolet?style=for-the-badge&logo=anthropic)](https://github.com/anthropics/claude-code)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-5%2F5_Ready-blue?style=for-the-badge)](https://github.com/rebecha1227-a11y/CareerForge)
+[![Skills](https://img.shields.io/badge/Skills-6%2F6_Ready-blue?style=for-the-badge)](https://github.com/rebecha1227-a11y/CareerForge)
 
 <br>
 
@@ -21,7 +21,7 @@
 
 <br>
 
-**AI 驱动的求职全链路工具包** · 从岗位搜索到简历生成再到模拟面试 · 开源免费
+**AI 驱动的求职全链路工具包** · 从岗位搜索到模拟面试再到 Offer 谈薪 · 开源免费
 
 兼容所有支持 Skills 的 AI Agent（Claude Code、Codex 等）
 
@@ -30,6 +30,19 @@
 ---
 
 ## 🆕 最近更新
+
+**2026-06-10 · 新增第 6 个 Skill：Offer 决策官**
+
+拿到多个 offer 不知道选哪个？AI 帮你：
+
+- 🆚 **多维度横向对比**：不只比薪资，算实际时薪、税后到手、隐性成本（大小周≈少一个月假）
+- 📐 **六维度雷达图**：经济价值 / 成长价值 / 平台价值 / 赛道价值 / 生活质量 / 安全边际
+- 🎯 **薪资谈判作战室**：锚点价 + 底线价 + 三套谈判话术脚本
+- 📊 **可视化决策报告**：一键生成 HTML 报告，清晰直观
+
+> 市面上所有求职工具都止步于「帮你拿 offer」，CareerForge 是唯一管到「选 offer + 谈薪」的 🔥
+
+---
 
 **2026-06-09 · 岗位搜索支持全球求职**
 
@@ -44,7 +57,7 @@
 
 ---
 
-## 包含 5 个 Skill
+## 包含 6 个 Skill
 
 | Skill | 功能 | 触发方式 |
 |-------|------|----------|
@@ -53,8 +66,9 @@
 | **resume-craft** | 多模板简历生成与优化，7 种专业排版，输出 HTML + PDF | `/resume-craft` 或 "帮我做一份简历" |
 | **cover-letter** | 求职信 & 招聘软件打招呼消息生成 | `/cover-letter` 或 "帮我写求职信" |
 | **mock-interview** | 三轮 AI 模拟面试 + 逐题反馈报告 | `/mock-interview` 或 "帮我模拟面试" |
+| **offer-decision** 🆕 | 多 Offer 横向对比 + 六维度雷达图 + 薪资谈判话术 | `/offer-decision` 或 "帮我选 offer" |
 
-> 💡 每个 Skill 独立可用，也可串联使用：搜岗位 → 分析匹配度 → 优化简历 → 写求职信 → 模拟面试
+> 💡 每个 Skill 独立可用，也可串联使用：搜岗位 → 分析匹配度 → 优化简历 → 写求职信 → 模拟面试 → **选 offer & 谈薪**
 
 ---
 
@@ -135,7 +149,9 @@ cp -r skills/* ~/.codex/skills/
 │   └── references/         # 设计规范
 ├── cover-letter/           # Skill 4：求职信
 │   └── SKILL.md
-└── mock-interview/         # Skill 5：模拟面试
+├── mock-interview/         # Skill 5：模拟面试
+│   └── SKILL.md
+└── offer-decision/         # Skill 6：Offer 决策官 🆕
     └── SKILL.md
 ```
 
@@ -343,6 +359,23 @@ AI：面试马上开始，一共三轮——
 |:---:|:---:|
 | ![模拟面试报告1](docs/images/demo-output-interview1.png) | ![模拟面试报告2](docs/images/demo-output-interview2.png) |
 
+### 🎯 Skill 6：Offer 决策官（offer-decision）🆕
+
+```
+你：/offer-decision（或"帮我选 offer"、"两个 offer 怎么选"、"帮我谈薪"）
+AI：你手上有几个 offer？每个 offer 的公司、岗位、薪资是什么？
+你：[提供 2 个 offer 的信息]
+AI：你现在最看重什么？（钱多 / 成长快 / 生活平衡 / 平台背书 / 赛道前景 / 稳定安全）
+你：成长快，其次是钱
+
+AI：→ 六维度评分对比（经济价值、成长价值、平台价值、赛道价值、生活质量、安全边际）
+   → 经济价值精算：年包、税后月到手、实际时薪（大小周 vs 双休折算）、城市购买力
+   → SVG 雷达图 + 每个维度逐条打分理由
+   → 薪资谈判作战室：锚点价 / 市场中位数 / 底线价 + 3 套谈判话术脚本
+   → 综合推荐 + 注意事项清单
+   → 可生成 HTML 可视化决策报告
+```
+
 ---
 
 ## 7 种简历模板
@@ -394,7 +427,15 @@ AI：面试马上开始，一共三轮——
   你："帮我模拟面试"
   AI → 三轮仿真面试（HR → 业务 → 高管）
      → 面试报告 + 逐题反馈 + 备考建议
-       ↓ 上战场！
+       ↓ 拿到 offer 了！
+
+第 6 步：选 offer & 谈薪
+  你："拿到两个 offer，帮我分析一下选哪个"
+  AI → 六维度横向对比 + 雷达图
+     → 精算实际时薪、城市购买力
+     → 薪资谈判话术 + 3 套场景脚本
+     → 推荐最优选择 + 注意事项
+       ↓ 签约！🎉
 ```
 
 ---
