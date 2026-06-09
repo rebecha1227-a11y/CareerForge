@@ -37,11 +37,25 @@ description: >
 
 从简历中能提取的信息直接提取，**提取不到的才问用户**。以下信息简历里通常不会写，需要主动询问：
 
-2. **目标城市**（必须）：你想在哪个城市/地区找工作？支持多个城市
-3. **期望薪资范围**（推荐）：你的期望薪资范围是？（不说也行，我先按岗位市场价搜）
-4. **岗位方向**（确认）：从简历中提取目标方向后，跟用户确认
+2. **目标国家/地区**（必须）：你想在哪个国家/地区找工作？
+   - 中国大陆
+   - 澳大利亚 / 新西兰
+   - 美国 / 加拿大
+   - 英国 / 欧洲
+   - 日本
+   - 韩国
+   - 新加坡 / 东南亚
+   - 其他（用户自己说）
+   - 支持多选（比如「澳洲和新西兰都看看」）
+
+3. **目标城市**（必须）：确认国家后，再问具体城市。支持多个城市
+
+4. **期望薪资范围**（推荐）：你的期望薪资范围是？（不说也行，我先按岗位市场价搜）
+
+5. **岗位方向**（确认）：从简历中提取目标方向后，跟用户确认
    - 比如：「根据你的简历，我会搜 AI 产品经理、AI Native Builder 方向的岗位，还需要加别的方向吗？」
-5. **硬性要求**（推荐）：你对工作有什么硬性要求？常见的比如：
+
+6. **硬性要求**（推荐）：你对工作有什么硬性要求？常见的比如：
    - 企业类型：外企/国企/民企/上市公司/创业公司
    - 作息制度：双休/大小周/弹性工作制/远程办公
    - 公司规模：大厂（1000人+）/ 中型 / 初创
@@ -49,8 +63,87 @@ description: >
    - 排除项：不想去的公司或行业
    - 其他：五险一金、不加班、带薪年假等
    - 用户不说就不强制，但搜到结果后如果能看出这些信息，也标注出来方便筛选
-6. **搜索平台**（可选）：
-   - 默认：先搜公开平台（LinkedIn、Indeed、Google Jobs）
+   - **海外用户额外询问**：是否需要雇主提供工作签证/签证担保？（visa sponsorship）
+
+7. **搜索平台**（用户多选）：
+
+   根据用户选择的国家/地区，推荐该地区常用平台，让用户多选想搜哪些。
+
+   **全球通用平台（所有地区默认推荐）：**
+   - LinkedIn（linkedin.com/jobs）
+   - Indeed（indeed.com，有各国子站）
+   - Google Jobs
+   - Glassdoor
+
+   **中国大陆：**
+   - Boss 直聘（zhipin.com）
+   - 猎聘（liepin.com）
+   - 拉勾（lagou.com）
+   - 智联招聘（zhaopin.com）
+   - 前程无忧（51job.com）
+   - 牛客网内推帖（nowcoder.com）
+   - V2EX 招聘帖
+   - 微信公众号招聘推文
+
+   **澳大利亚：**
+   - Seek Australia（seek.com.au）— 澳洲最大求职平台
+   - Jora（jora.com）
+   - Indeed Australia（au.indeed.com）
+   - Facebook Jobs / Groups — 澳洲很活跃
+
+   **新西兰：**
+   - Seek New Zealand（seek.co.nz）— 独立站点，与澳洲 Seek 分开
+   - Trade Me Jobs（trademe.co.nz）— 新西兰本土最大
+   - Indeed New Zealand
+
+   **美国 / 加拿大：**
+   - ZipRecruiter（ziprecruiter.com）
+   - Monster（monster.com）
+   - Dice（dice.com）— 科技岗专用
+   - USAJobs（usajobs.gov）— 美国政府岗位
+   - AngelList / Wellfound — 创业公司
+
+   **英国：**
+   - Reed（reed.co.uk）
+   - Totaljobs（totaljobs.com）
+   - CV-Library（cv-library.co.uk）
+   - Indeed UK（uk.indeed.com）
+
+   **欧洲（德语区）：**
+   - StepStone（stepstone.de）
+   - XING（xing.com）— 德语区 LinkedIn
+
+   **日本：**
+   - Daijob（daijob.com）— 面向外国人
+   - GaijinPot Jobs（jobs.gaijinpot.com）— 面向外国人
+   - Rikunabi（rikunabi.com）
+
+   **韩国：**
+   - Saramin（saramin.co.kr）— 韩国最大求职平台
+   - JobKorea（jobkorea.co.kr）— 韩国第二大
+   - WorkNet（work.go.kr）— 韩国政府官方平台
+   - People'n Job（peoplenjob.com）— 面向外国人
+
+   **新加坡：**
+   - MyCareersFuture（mycareersfuture.gov.sg）— 政府官方平台
+   - JobStreet Singapore（jobstreet.com.sg）
+
+   **东南亚（马来西亚/菲律宾/印尼等）：**
+   - JobStreet（jobstreet.com）— 覆盖多个东南亚国家
+   - JobsDB（jobsdb.com）— 港澳及东南亚
+
+   **对话示例：**
+   > AI：「你在澳大利亚找工作，以下平台比较常用，想搜哪些？（可多选，或说"全搜"）」
+   > 1. Seek Australia（澳洲最大）
+   > 2. LinkedIn
+   > 3. Indeed Australia
+   > 4. Jora
+   > 5. Glassdoor
+   > 6. Facebook Jobs/Groups
+   >
+   > 用户：「1、2、3」
+
+   **需要登录的平台处理（中国大陆平台为主）：**
    - 用户指定 Boss 直聘、拉勾等需要登录的平台 → 引导提供 cookies
    - 用户有 Chrome MCP → 可以在已登录的浏览器中直接搜索
    - **主动询问**：「你在 Boss 直聘上有没有已经建好的岗位分组？有的话我可以直接从分组里提取全部岗位，数据量会大很多（通常 300-500 个）」
@@ -117,31 +210,90 @@ description: >
 
 #### 免登录平台（默认启用）
 
-直接使用 WebSearch 搜索以下平台：
+根据用户选择的平台，使用 WebSearch 搜索。以下按地区列出搜索指令。
 
-**招聘平台（通过搜索引擎缓存）：**
+**全球通用平台：**
+- `site:linkedin.com/jobs 岗位名 城市`（LinkedIn）
+- `site:indeed.com 岗位名 城市`（Indeed，自动匹配各国子站）
+- `site:glassdoor.com 岗位名 城市`（Glassdoor）
+
+**中国大陆平台：**
 - `site:zhipin.com 岗位名 城市`（Boss 直聘）
 - `site:lagou.com 岗位名 城市`（拉勾）
 - `site:liepin.com 岗位名 城市`（猎聘）
 - `site:51job.com 岗位名 城市`（前程无忧）
 - `site:zhaopin.com 岗位名 城市`（智联招聘）
-- `site:linkedin.com/jobs 岗位名 城市`（LinkedIn）
-- `site:indeed.com 岗位名 城市`（Indeed）
 
-**企业官方招聘：**
+**澳大利亚 / 新西兰：**
+- `site:seek.com.au 岗位名 城市`（Seek 澳洲）
+- `site:seek.co.nz 岗位名 城市`（Seek 新西兰，独立站点）
+- `site:trademe.co.nz/a/jobs 岗位名 城市`（Trade Me Jobs，新西兰本土）
+- `site:jora.com 岗位名 城市`（Jora）
+- `site:au.indeed.com 岗位名 城市`（Indeed 澳洲）
+- 如需工签筛选：追加 `"visa sponsorship" OR "sponsor"`
+
+**美国 / 加拿大：**
+- `site:ziprecruiter.com 岗位名 城市`（ZipRecruiter）
+- `site:monster.com 岗位名 城市`（Monster）
+- `site:dice.com 岗位名`（Dice，科技岗专用）
+- `site:usajobs.gov 岗位名`（USAJobs，美国政府岗位）
+- `site:wellfound.com 岗位名`（AngelList/Wellfound，创业公司）
+- 如需工签筛选：追加 `"h1b" OR "visa sponsorship" OR "work authorization"`
+
+**英国：**
+- `site:reed.co.uk 岗位名 城市`（Reed）
+- `site:totaljobs.com 岗位名 城市`（Totaljobs）
+- `site:cv-library.co.uk 岗位名 城市`（CV-Library）
+- 如需工签筛选：追加 `"visa sponsorship" OR "skilled worker visa" OR "sponsorship licence"`
+
+**欧洲（德语区）：**
+- `site:stepstone.de 岗位名 城市`（StepStone）
+- `site:xing.com 岗位名 城市`（XING）
+
+**日本：**
+- `site:daijob.com 岗位名`（Daijob，面向外国人）
+- `site:jobs.gaijinpot.com 岗位名`（GaijinPot Jobs，面向外国人）
+- `site:rikunabi.com 岗位名`（Rikunabi）
+- 如需工签筛选：追加 `"visa support" OR "ビザサポート"`
+
+**韩国：**
+- `site:saramin.co.kr 岗位名`（Saramin，韩国最大）
+- `site:jobkorea.co.kr 岗位名`（JobKorea）
+- `site:work.go.kr 岗位名`（WorkNet，政府官方）
+- `site:peoplenjob.com 岗位名`（People'n Job，面向外国人）
+- 如需工签筛选：追加 `"visa" OR "비자 지원" OR "외국인 가능"`
+
+**新加坡：**
+- `site:mycareersfuture.gov.sg 岗位名`（MyCareersFuture，政府官方）
+- `site:jobstreet.com.sg 岗位名`（JobStreet 新加坡）
+
+**东南亚（马来/菲律宾/印尼等）：**
+- `site:jobstreet.com 岗位名 国家`（JobStreet）
+- `site:jobsdb.com 岗位名 城市`（JobsDB，港澳及东南亚）
+
+**社交平台招聘（海外地区可选）：**
+- `site:facebook.com/jobs 岗位名 城市`（Facebook Jobs）
+- `site:reddit.com 岗位名 hiring 城市`（Reddit 招聘帖）
+
+**中国大陆专属——企业官方招聘：**
 - `岗位名 招聘 城市`（覆盖各公司官网、招聘页）
 - `岗位名 城市 "加入我们"`（企业招聘页常用语）
 - `岗位名 城市 "社会招聘" OR "社招"`
 
-**微信公众号招聘推文：**
+**中国大陆专属——微信公众号招聘推文：**
 - `site:mp.weixin.qq.com 岗位名 招聘 城市`（Google 收录的公众号文章）
 - 搜狗微信搜索：`weixin.sogou.com` 搜索 `岗位名 招聘 城市`（专门搜公众号的搜索引擎）
 - 很多大厂（字节、腾讯、阿里、百度等）的招聘公众号会发岗位推文，这类结果优先级高
 
-**垂直社区：**
+**中国大陆专属——垂直社区：**
 - `site:nowcoder.com 岗位名 城市 内推`（牛客网内推帖）
 - `site:v2ex.com 岗位名 招聘`（V2EX 招聘帖）
 - `site:juejin.cn 岗位名 招聘`（掘金社区）
+
+**搜索语言策略：**
+- 中国大陆：中文关键词为主
+- 海外地区：英文关键词为主，同时用中文搜一轮（覆盖华人社群招聘帖）
+- 日本：英文 + 日文都搜
 
 搜到的缓存摘要虽然不完整，但足够判断岗位是否值得深入查看。
 
@@ -353,7 +505,7 @@ def search_zhipin(keywords, city, cookies_str):
 
 搜索完成后，**主动询问用户是否需要导出 Excel 表格**。如果用户需要：
 
-使用 openpyxl 生成 `.xlsx` 文件（需要先确认用户已安装 `pip3 install openpyxl`），包含以下 12 列：
+使用 openpyxl 生成 `.xlsx` 文件（需要先确认用户已安装 `pip3 install openpyxl`），包含以下 13 列：
 
 | 列名 | 说明 |
 |------|------|
@@ -365,10 +517,17 @@ def search_zhipin(keywords, city, cookies_str):
 | 薪资 | 薪资范围 |
 | 经验要求 | 年限要求 |
 | 匹配点 | 简历中匹配的技能/经历 |
+| 签证/工签 | ✅ 提供担保 / ❓ 未标注 / ❌ 仅限本地身份（海外岗位专用，中国大陆岗位留空） |
 | 标签 | 双休/外企/大厂/远程 等 |
-| 来源平台 | Boss直聘/猎聘/智联 等 |
+| 来源平台 | Seek AU/LinkedIn/Indeed 等 |
 | 链接 | 岗位详情 URL |
 | 备注 | 额外信息（如"急招"、"明确写了vibe coding"等） |
+
+**签证/工签列的数据来源：**
+- JD 中明确写了 `visa sponsorship`、`sponsor`、`h1b`、`skilled worker visa`、`482 visa`、`ビザサポート` 等 → 标注 ✅
+- JD 中写了 `must have working rights`、`permanent resident only`、`citizen only` 等 → 标注 ❌
+- JD 中未提及签证相关信息 → 标注 ❓
+- 中国大陆岗位：此列留空（不适用）
 
 **Excel 格式要求：**
 - 表头行：加粗白色字体 + 蓝色背景（`#4472C4`）+ 居中
@@ -377,8 +536,8 @@ def search_zhipin(keywords, city, cookies_str):
 - 🟠 行：浅橙底色（`#FFF3E0`）
 - 链接列：蓝色下划线字体
 - 冻结首行 + 启用自动筛选器
-- 列宽：`[5, 10, 40, 18, 18, 16, 10, 36, 18, 12, 32, 30]`
-- 文件名：`岗位搜索结果_城市_日期.xlsx`
+- 列宽：`[5, 10, 40, 18, 18, 16, 10, 36, 14, 18, 14, 32, 30]`
+- 文件名：`岗位搜索结果_国家/城市_日期.xlsx`（海外用户包含国家，如 `岗位搜索结果_AU-Sydney_20260609.xlsx`）
 
 **支持追加模式：**
 
