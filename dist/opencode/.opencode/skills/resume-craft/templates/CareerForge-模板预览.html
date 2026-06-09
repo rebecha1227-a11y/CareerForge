@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerForge — 7种简历模板预览</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#111;font-family:'DM Sans',sans-serif;color:#fff;min-height:100vh}
+.hdr{text-align:center;padding:44px 24px 8px}
+.hdr h1{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:300;letter-spacing:6px;text-transform:uppercase}
+.hdr p{margin-top:6px;font-size:12px;color:rgba(255,255,255,0.3);font-weight:300}
+.grid{max-width:1200px;margin:24px auto 60px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;transition:all 0.3s}
+.card:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.lbl{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04)}
+.lbl-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;letter-spacing:1px;color:rgba(255,255,255,0.7)}
+.lbl-t{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.35)}
+.pv{padding:10px;height:500px;overflow:hidden}
+.m{width:100%;height:100%;border-radius:2px;overflow:hidden;font-size:7.5px;line-height:1.4}
+
+/* == Shared micro-classes == */
+.ph{background:#ddd;flex-shrink:0;border-radius:2px}
+
+/* == T1: EDITORIAL == */
+.t1{background:#faf9f7;padding:18px;font-family:'Source Sans 3','Noto Sans SC',sans-serif}
+.t1 .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.t1 .nm{font-family:'Playfair Display','Noto Serif SC',serif;font-size:24px;font-weight:700;color:#1a1f2e}
+.t1 .ne{font-size:8px;color:#bbb;letter-spacing:3px;margin-left:6px;font-family:'Playfair Display',serif}
+.t1 .tl{font-family:'Playfair Display',serif;font-size:10px;color:#2d6b5f;font-weight:600;margin-top:2px}
+.t1 .ct{margin-top:6px;font-size:6.5px;color:#999;display:flex;gap:8px}
+.t1 .ct span::before{content:'✦ ';color:#2d6b5f}
+.t1 .dv{height:2.5px;background:linear-gradient(90deg,#2d6b5f,#d4a853,#2d6b5f);margin:8px 0;border-radius:2px}
+.t1 .sc{font-family:'Playfair Display',serif;font-size:7px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#2d6b5f;margin:10px 0 5px}
+.t1 .sc::before{content:'— ';color:#d4a853}
+.t1 .sm{font-size:7px;color:#555;line-height:1.55;font-weight:300}
+.t1 .sm b{color:#1a1f2e;font-weight:600}
+.t1 .cd{border-left:2px solid #2d6b5f;background:#fff;padding:5px 7px;margin-bottom:4px}
+.t1 .ct2{font-family:'Playfair Display',serif;font-size:8px;font-weight:600;color:#1a1f2e}
+.t1 .cd2{font-size:6px;color:#777;margin-top:1px;line-height:1.4}
+.t1 .tg{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap}
+.t1 .tg span{font-size:5px;background:#e8f4f0;color:#2d6b5f;padding:1px 3px;border-radius:1px}
+
+/* == T2: MINIMAL == */
+.t2{background:#fff;padding:22px 20px;font-family:'DM Sans','Noto Sans SC',sans-serif}
+.t2 .nm{font-size:20px;font-weight:700;color:#111;letter-spacing:1px}
+.t2 .tl{font-size:8px;color:#aaa;font-weight:300;letter-spacing:3px;text-transform:uppercase;margin-top:1px}
+.t2 .ct{margin-top:8px;font-size:6.5px;color:#ccc;display:flex;gap:14px}
+.t2 .dv{height:0.5px;background:#e5e5e5;margin:10px 0}
+.t2 .sc{font-size:6.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#111;margin:12px 0 6px}
+.t2 .sm{font-size:7px;color:#777;line-height:1.65;font-weight:300}
+.t2 .cd{padding:5px 0;border-bottom:0.5px solid #f5f5f5}
+.t2 .ct2{font-size:8px;font-weight:600;color:#111}
+.t2 .cd2{font-size:6px;color:#999;margin-top:1px;line-height:1.4}
+.t2 .tg{display:flex;gap:2px;margin-top:2px}
+.t2 .tg span{font-size:5px;border:0.5px solid #ddd;color:#777;padding:1px 4px}
+
+/* == T3: SIDEBAR NAVY == */
+.t3{display:flex;height:100%;font-family:'Outfit','Noto Sans SC',sans-serif;background:#fff}
+.t3 .side{width:34%;background:#1e293b;color:#fff;padding:14px 10px;flex-shrink:0}
+.t3 .mn{padding:14px 12px;flex:1;color:#333}
+.t3 .ph3{width:50px;height:50px;border-radius:50%;background:#334155;margin:0 auto 6px;border:1.5px solid #475569}
+.t3 .nm{font-size:12px;font-weight:700;text-align:center}
+.t3 .tl{font-size:6px;text-align:center;color:#94a3b8;font-weight:300;margin-top:1px}
+.t3 .ss{font-size:5.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#60a5fa;margin:10px 0 4px;padding-bottom:2px;border-bottom:0.5px solid #334155}
+.t3 .si{font-size:6px;color:#cbd5e1;margin-bottom:1px;font-weight:300}
+.t3 .si b{color:#fff;font-weight:500}
+.t3 .st{font-size:5px;background:rgba(96,165,250,0.15);color:#93c5fd;padding:1px 4px;border-radius:1px;display:inline-block;margin:1px 1px}
+.t3 .ms{font-size:7px;font-weight:600;color:#1e293b;margin:0 0 5px;padding-bottom:2px;border-bottom:1px solid #eee;letter-spacing:1px}
+.t3 .cd{margin-bottom:5px}
+.t3 .ct2{font-size:7.5px;font-weight:600;color:#1e293b}
+.t3 .cs{font-size:5px;color:#999}
+.t3 .cd2{font-size:6px;color:#64748b;margin-top:1px;line-height:1.3}
+
+/* == T4: SIDEBAR DARK == */
+.t4{display:flex;height:100%;font-family:'Outfit','Noto Sans SC',sans-serif;background:#fff}
+.t4 .side{width:33%;background:#2c2c2c;color:#fff;padding:14px 10px;flex-shrink:0}
+.t4 .mn{padding:14px 12px;flex:1;color:#333}
+.t4 .nm{font-size:13px;font-weight:700;text-align:center}
+.t4 .tl{font-size:6px;text-align:center;color:#aaa;font-weight:300;margin-top:1px}
+.t4 .ss{font-size:5.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#999;margin:10px 0 4px;padding-bottom:2px;border-bottom:0.5px solid #444}
+.t4 .si{font-size:6px;color:#ccc;margin-bottom:1px;font-weight:300}
+.t4 .si b{color:#fff;font-weight:500}
+.t4 .st{font-size:5px;background:rgba(255,255,255,0.1);color:#ddd;padding:1px 4px;border-radius:1px;display:inline-block;margin:1px 1px}
+.t4 .ms{font-size:7px;font-weight:700;color:#2c2c2c;margin:0 0 5px;padding-bottom:2px;border-bottom:1px solid #eee;letter-spacing:1px}
+.t4 .cd{margin-bottom:5px}
+.t4 .ct2{font-size:7.5px;font-weight:600;color:#2c2c2c}
+.t4 .cs{font-size:5px;color:#999}
+.t4 .cd2{font-size:6px;color:#666;margin-top:1px;line-height:1.3}
+
+/* == T5: DARK HEADER == */
+.t5{background:#fff;font-family:'DM Sans','Noto Sans SC',sans-serif;height:100%;display:flex;flex-direction:column}
+.t5 .hd{background:#1a1a2e;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.t5 .nm{font-size:18px;font-weight:700}
+.t5 .tl{font-size:7px;color:rgba(255,255,255,0.45);font-weight:300;margin-top:1px;letter-spacing:1px}
+.t5 .ct{margin-top:5px;font-size:6px;color:rgba(255,255,255,0.35);display:flex;gap:8px}
+.t5 .bd{padding:12px 16px;flex:1;overflow:hidden}
+.t5 .sc{font-size:6.5px;font-weight:600;color:#fff;background:#1a1a2e;display:inline-block;padding:1.5px 8px;border-radius:8px;margin:8px 0 5px;letter-spacing:1px}
+.t5 .sc:first-child{margin-top:0}
+.t5 .sm{font-size:7px;color:#555;line-height:1.55;font-weight:300}
+.t5 .cd{padding:4px 0;border-bottom:0.5px solid #f0f0f0}
+.t5 .ct2{font-size:7.5px;font-weight:600;color:#1a1a2e}
+.t5 .cd2{font-size:6px;color:#888;margin-top:1px;line-height:1.3}
+.t5 .tg{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap}
+.t5 .tg span{font-size:5px;background:#f0f0f8;color:#1a1a2e;padding:1px 4px;border-radius:1px}
+
+/* == T6: CLEAN TEAL == */
+.t6{background:#fff;font-family:'Source Sans 3','Noto Sans SC',sans-serif;padding:0;height:100%}
+.t6 .hd{padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #3a8f7f}
+.t6 .nm{font-size:20px;font-weight:700;color:#333}
+.t6 .tl{font-size:8px;color:#3a8f7f;font-weight:600;margin-top:1px}
+.t6 .ct{margin-top:5px;font-size:6px;color:#999;display:flex;gap:6px}
+.t6 .bd{padding:8px 16px}
+.t6 .sc{font-size:7px;font-weight:700;color:#fff;background:#3a8f7f;padding:2px 10px;margin:8px -16px 6px;letter-spacing:1.5px}
+.t6 .sc:first-child{margin-top:2px}
+.t6 .sm{font-size:7px;color:#555;line-height:1.55;font-weight:300}
+.t6 .cd{margin-bottom:4px;padding-left:6px;border-left:2px solid #3a8f7f}
+.t6 .ct2{font-size:7.5px;font-weight:600;color:#333}
+.t6 .cd2{font-size:6px;color:#777;margin-top:1px;line-height:1.3}
+.t6 .tg{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap}
+.t6 .tg span{font-size:5px;background:#e8f5f1;color:#2d6b5f;padding:1px 4px;border-radius:1px}
+
+/* == T7: ELEGANT == */
+.t7{background:#fcfcfa;font-family:'Libre Baskerville','Noto Serif SC',serif;padding:18px 16px;height:100%}
+.t7 .hd{text-align:center;padding-bottom:10px;border-bottom:1.5px solid #333}
+.t7 .nm{font-size:22px;font-weight:700;color:#222;letter-spacing:4px}
+.t7 .tl{font-size:8px;color:#999;font-weight:400;margin-top:2px;font-style:italic;letter-spacing:1px}
+.t7 .ct{margin-top:6px;font-size:6px;color:#bbb;display:flex;justify-content:center;gap:12px;font-family:'DM Sans',sans-serif}
+.t7 .ct span::before{content:'· ';color:#ccc;font-weight:700}
+.t7 .sc{font-size:7px;font-weight:700;color:#222;margin:12px 0 5px;text-align:center;letter-spacing:3px;text-transform:uppercase;position:relative}
+.t7 .sc::before,.t7 .sc::after{content:'';position:absolute;top:50%;height:0.5px;background:#ccc;width:20%}
+.t7 .sc::before{left:0}
+.t7 .sc::after{right:0}
+.t7 .sm{font-size:7px;color:#777;line-height:1.65;font-style:italic;text-align:center}
+.t7 .cd{margin-bottom:4px;padding:4px 8px;border:0.5px solid #e8e6e2;background:#fff}
+.t7 .ct2{font-size:8px;font-weight:700;color:#222}
+.t7 .cd2{font-size:6px;color:#999;margin-top:1px;line-height:1.4;font-style:italic}
+.t7 .tg{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap}
+.t7 .tg span{font-size:5px;border:0.5px solid #d0ccc5;color:#666;padding:1px 4px;font-family:'DM Sans',sans-serif}
+</style>
+</head>
+<body>
+<div class="hdr"><h1>CAREERFORGE TEMPLATES</h1><p>7 种简历模板风格预览</p></div>
+<div class="grid">
+
+<!-- T1 Editorial -->
+<div class="card"><div class="lbl"><span class="lbl-n">01 · Editorial 杂志编辑风</span><span class="lbl-t">经典</span></div><div class="pv"><div class="m t1">
+<div class="hd"><div style="flex:1"><div class="nm">林悦然<span class="ne">YUERAN LIN</span></div><div class="tl">AI 产品经理 — AI Product Builder</div><div class="ct"><span>13888886666</span><span>linyueran@email.com</span><span>上海</span></div></div><div class="ph" style="width:50px;height:66px"></div></div>
+<div class="dv"></div>
+<div class="sc">个 人 简 介</div>
+<div class="sm"><b>3 年产品经验</b>，重度使用 Claude Code / Cursor 等 AI 编码工具。独立搭建多个内部提效工具，<b>团队效率提升 40%</b>。</div>
+<div class="sc">A I 项 目 经 验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手（全栈）</div><div class="cd2">多层记忆架构，语义检索引擎，API 工具集成。</div><div class="tg"><span>Claude Code</span><span>MCP</span><span>全栈</span></div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cd2">任务管理、实时协作、数据看板。</div><div class="tg"><span>HTML/JS</span><span>Supabase</span></div></div>
+<div class="cd"><div class="ct2">DataViz — 数据可视化工具（开源）</div><div class="cd2">多种图表类型，一键导出，已开源。</div><div class="tg"><span>开源</span><span>模板系统</span></div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cd2">Python 入门讲义+练习+错题本。</div><div class="tg"><span>教育产品</span></div></div>
+</div></div></div>
+
+<!-- T2 Minimal -->
+<div class="card"><div class="lbl"><span class="lbl-n">02 · Minimal 极简主义</span><span class="lbl-t">克制</span></div><div class="pv"><div class="m t2">
+<div class="nm">林悦然</div><div class="tl">AI Product Manager</div>
+<div class="ct"><span>13888886666</span><span>linyueran@email.com</span><span>上海</span></div>
+<div class="dv"></div>
+<div class="sc">ABOUT</div>
+<div class="sm">3 年产品经验，1 年+ AI 辅助开发经验。独立搭建多个内部提效工具，团队效率提升 40%。</div>
+<div class="dv"></div>
+<div class="sc">PROJECTS</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手</div><div class="cd2">全栈，多层记忆架构，语义检索引擎，API 工具集成。</div><div class="tg"><span>Claude Code</span><span>MCP</span><span>全栈</span></div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cd2">任务管理、实时协作、数据看板。</div><div class="tg"><span>HTML/JS</span><span>Supabase</span></div></div>
+<div class="cd"><div class="ct2">DataViz — 数据可视化工具</div><div class="cd2">开源，多种图表类型，一键导出。</div><div class="tg"><span>开源</span><span>Vibe Coding</span></div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cd2">Python 入门讲义+练习+错题本。</div><div class="tg"><span>教育产品</span></div></div>
+<div class="dv"></div>
+<div class="sc">EXPERIENCE</div>
+<div class="cd"><div class="ct2">产品运营经理 · 星辰科技</div><div class="cd2">DAU 提升 30%，搭建用户增长体系。</div></div>
+</div></div></div>
+
+<!-- T3 Sidebar Navy -->
+<div class="card"><div class="lbl"><span class="lbl-n">03 · Sidebar Navy 深蓝双栏</span><span class="lbl-t">结构化</span></div><div class="pv"><div class="m t3">
+<div class="side">
+<div class="ph3"></div>
+<div class="nm">林悦然</div><div class="tl">AI 产品经理</div>
+<div class="ss">联系方式</div><div class="si">13888886666</div><div class="si">linyueran@email.com</div><div class="si">上海</div>
+<div class="ss">技能</div><div><span class="st">Claude Code</span><span class="st">Codex</span><span class="st">Cursor</span><span class="st">Trae</span><span class="st">HTML</span><span class="st">JS</span><span class="st">Supabase</span><span class="st">MCP</span><span class="st">Figma</span></div>
+<div class="ss">语言</div><div class="si"><b>英语</b> CET-6 580</div><div class="si"><b>日语</b> N2</div>
+<div class="ss">教育</div><div class="si"><b>复旦大学</b></div><div class="si" style="font-size:5px;color:#94a3b8">计算机硕士 3.7/4.0</div><div class="si" style="margin-top:3px"><b>南京大学</b></div><div class="si" style="font-size:5px;color:#94a3b8">软件工程学士 3.8/4.0</div>
+</div>
+<div class="mn">
+<div class="ms">项目经验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手</div><div class="cs">全栈 · Vibe Coding</div><div class="cd2">多层记忆架构，语义检索引擎，API 工具集成。</div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cs">前端 · Supabase</div><div class="cd2">任务管理、实时协作、权限控制。</div></div>
+<div class="cd"><div class="ct2">DataViz — 可视化工具（开源）</div><div class="cs">开源 · GitHub</div><div class="cd2">多种图表类型，一键导出。</div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cs">教育产品</div><div class="cd2">Python 入门讲义+练习+错题本。</div></div>
+<div class="ms" style="margin-top:8px">工作经历</div>
+<div class="cd"><div class="ct2">产品运营经理</div><div class="cs">星辰科技 · 2023-至今</div><div class="cd2">DAU 提升 30%，搭建增长体系。</div></div>
+</div>
+</div></div></div>
+
+<!-- T4 Sidebar Dark -->
+<div class="card"><div class="lbl"><span class="lbl-n">04 · Sidebar Dark 深灰左栏</span><span class="lbl-t">沉稳</span></div><div class="pv"><div class="m t4">
+<div class="side">
+<div class="ph" style="width:52px;height:68px;margin:0 auto 6px;background:#555"></div>
+<div class="nm">林悦然</div><div class="tl">AI 产品经理</div>
+<div class="ss">联系方式</div><div class="si">13888886666</div><div class="si">linyueran@email.com</div><div class="si">上海</div>
+<div class="ss">技能工具</div><div><span class="st">Claude Code</span><span class="st">Codex</span><span class="st">Cursor</span><span class="st">Trae</span><span class="st">Figma</span><span class="st">HTML</span><span class="st">JS</span><span class="st">Supabase</span><span class="st">MCP</span></div>
+<div class="ss">语言</div><div class="si"><b>英语</b> CET-6 580</div><div class="si"><b>日语</b> N2</div>
+<div class="ss">教育</div><div class="si"><b>复旦</b> 计算机硕士 3.7</div><div class="si"><b>南大</b> 软件工程学士 3.8</div>
+</div>
+<div class="mn">
+<div class="ms">个人简介</div>
+<div class="cd"><div class="cd2">3 年产品经验，1 年+ AI 辅助开发经验。独立搭建多个提效工具，团队效率提升 40%。</div></div>
+<div class="ms" style="margin-top:8px">项目经验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手</div><div class="cs">全栈</div><div class="cd2">多层记忆架构，语义检索引擎。</div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cs">前端 · Supabase</div><div class="cd2">实时协作、权限管理。</div></div>
+<div class="cd"><div class="ct2">DataViz — 可视化工具（开源）</div><div class="cs">GitHub</div><div class="cd2">多种图表类型，一键导出。</div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cs">教育产品</div><div class="cd2">Python 入门讲义+练习+错题本。</div></div>
+<div class="ms" style="margin-top:8px">工作经历</div>
+<div class="cd"><div class="ct2">产品运营经理</div><div class="cs">星辰科技 · 2023-至今</div></div>
+<div class="cd"><div class="ct2">产品助理</div><div class="cs">云途互联 · 2021-2023</div></div>
+</div>
+</div></div></div>
+
+<!-- T5 Dark Header -->
+<div class="card"><div class="lbl"><span class="lbl-n">05 · Dark Header 深色头部</span><span class="lbl-t">醒目</span></div><div class="pv"><div class="m t5">
+<div class="hd"><div style="flex:1"><div class="nm">林悦然</div><div class="tl">AI 产品经理 · AI Product Builder</div><div class="ct"><span>13888886666</span><span>linyueran@email.com</span><span>上海</span></div></div><div class="ph" style="width:46px;height:60px;background:#333;border:1px solid rgba(255,255,255,0.15)"></div></div>
+<div class="bd">
+<div class="sc">个人简介</div>
+<div class="sm">3 年产品经验，重度使用 Claude Code 等 AI 编码工具。独立搭建多个内部提效工具，团队效率提升 40%。</div>
+<div class="sc">项目经验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手（全栈）</div><div class="cd2">多层记忆架构，语义检索引擎，API 工具集成。</div><div class="tg"><span>Claude Code</span><span>MCP</span><span>全栈</span></div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cd2">任务管理、实时协作、数据看板。</div><div class="tg"><span>HTML/JS</span><span>Supabase</span></div></div>
+<div class="cd"><div class="ct2">DataViz — 数据可视化工具（开源）</div><div class="cd2">多种图表类型，一键导出。</div><div class="tg"><span>开源</span><span>模板系统</span></div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cd2">Python 入门讲义+练习+错题本。</div><div class="tg"><span>教育产品</span></div></div>
+<div class="sc">工作经历</div>
+<div class="cd"><div class="ct2">产品运营经理 · 星辰科技</div><div class="cd2">DAU 提升 30%，搭建用户增长体系。</div></div>
+</div>
+</div></div></div>
+
+<!-- T6 Clean Teal -->
+<div class="card"><div class="lbl"><span class="lbl-n">06 · Clean Teal 清新青色</span><span class="lbl-t">鲜明</span></div><div class="pv"><div class="m t6">
+<div class="hd"><div style="flex:1"><div class="nm">林悦然</div><div class="tl">AI 产品经理</div><div class="ct"><span>13888886666</span><span>linyueran@email.com</span><span>上海</span></div></div><div class="ph" style="width:48px;height:64px"></div></div>
+<div class="bd">
+<div class="sc">个人简介</div>
+<div class="sm">3 年产品经验，重度使用 Claude Code / Cursor 等 AI 编码工具。独立搭建多个内部提效工具，团队效率提升 40%。</div>
+<div class="sc">项目经验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手（全栈）</div><div class="cd2">多层记忆架构，语义检索引擎，API 工具集成。</div><div class="tg"><span>Claude Code</span><span>MCP</span><span>全栈</span></div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cd2">任务管理、实时协作、数据看板。</div><div class="tg"><span>HTML/JS</span><span>Supabase</span></div></div>
+<div class="cd"><div class="ct2">DataViz — 数据可视化工具（开源）</div><div class="cd2">多种图表类型，一键导出。</div><div class="tg"><span>开源</span><span>模板系统</span></div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cd2">Python 入门讲义+练习+错题本。</div><div class="tg"><span>教育产品</span></div></div>
+<div class="sc">工作经历</div>
+<div class="cd"><div class="ct2">产品运营经理 · 星辰科技</div><div class="cd2">DAU 提升 30%，用户增长策略，内容运营。</div></div>
+</div>
+</div></div></div>
+
+<!-- T7 Elegant -->
+<div class="card"><div class="lbl"><span class="lbl-n">07 · Elegant 优雅对称</span><span class="lbl-t">精致</span></div><div class="pv"><div class="m t7">
+<div class="hd">
+<div class="nm">林 悦 然</div>
+<div class="tl">AI 产品经理 — AI Product Builder</div>
+<div class="ct"><span>13888886666</span><span>linyueran@email.com</span><span>上海</span></div>
+</div>
+<div class="sc">个人简介</div>
+<div class="sm">3 年产品经验，重度使用 Claude Code 等 AI 编码工具。独立搭建多个提效工具，团队效率提升 40%。</div>
+<div class="sc">项目经验</div>
+<div class="cd"><div class="ct2">MemoAI — 智能记忆助手（全栈）</div><div class="cd2">多层记忆架构，语义检索引擎，API 集成。</div><div class="tg"><span>Claude Code</span><span>MCP</span><span>全栈</span></div></div>
+<div class="cd"><div class="ct2">TeamFlow — 团队协作平台</div><div class="cd2">任务管理、实时协作、数据看板。</div><div class="tg"><span>HTML/JS</span><span>Supabase</span></div></div>
+<div class="cd"><div class="ct2">DataViz — 数据可视化工具（开源）</div><div class="cd2">多种图表类型，一键导出，已开源。</div><div class="tg"><span>开源</span><span>Vibe Coding</span></div></div>
+<div class="cd"><div class="ct2">CodePath — 编程学习平台</div><div class="cd2">Python 入门讲义+练习+错题本。</div><div class="tg"><span>教育产品</span></div></div>
+<div class="sc">工作经历</div>
+<div class="cd"><div class="ct2">产品运营经理 · 星辰科技</div><div class="cd2">DAU 提升 30%，搭建增长体系。</div></div>
+</div></div></div>
+
+</div>
+</body>
+</html>

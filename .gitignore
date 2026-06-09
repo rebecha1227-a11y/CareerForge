@@ -10,7 +10,7 @@
 /skills/
 
 # Claude Code 本地配置
-.claude/
+/.claude/
 
 # Playwright 缓存
 .playwright-mcp/

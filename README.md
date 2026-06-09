@@ -60,23 +60,41 @@
 
 ## 安装
 
-### 方式一：一键安装全部 Skill（推荐）
+支持 **8 种 AI Agent 平台**，选你在用的那个就行。
 
-在你的项目目录下运行：
+### 方式一：一键安装（推荐）
+
+运行安装脚本，会自动询问你用的是哪个 Agent，然后装到对应目录：
 
 ```bash
 curl -sL https://raw.githubusercontent.com/rebecha1227-a11y/CareerForge/main/install.sh | bash
 ```
 
-这会自动下载并安装所有 5 个 Skill 到 `./skills/` 目录。
+### 方式二：手动安装（按平台）
 
-### 方式二：克隆仓库
+如果你更喜欢手动操作，先克隆仓库：
 
 ```bash
 git clone https://github.com/rebecha1227-a11y/CareerForge.git
 cd CareerForge
-./install.sh
 ```
+
+然后根据你的 Agent 执行对应命令：
+
+| Agent | 安装命令 |
+|-------|----------|
+| **Claude Code** | `cp -r dist/claude-code/.claude/skills/* ~/.claude/skills/` |
+| **Codex CLI** | `cp -r dist/codex/.codex/skills/* ~/.codex/skills/` |
+| **Cursor** | `cp -r dist/cursor/.cursor your-project/` |
+| **Gemini CLI** | `cp -r dist/gemini/.gemini/skills/* ~/.gemini/skills/` |
+| **Trae（国际版）** | `cp -r dist/trae/.trae/skills/* ~/.trae/skills/` |
+| **Trae（国内版）** | `cp -r dist/trae-cn/.trae-cn/skills/* ~/.trae-cn/skills/` |
+| **OpenCode** | `cp -r dist/opencode/.opencode your-project/` |
+| **Rovo Dev** | `cp -r dist/rovo-dev/.rovodev/skills/* ~/.rovodev/skills/` |
+
+> 💡 **Cursor 用户注意**：需要先在 Settings → Beta 切换到 Nightly 频道，并启用 Agent Skills。
+>
+> 💡 **Gemini CLI 用户注意**：需要运行 `/settings` 启用 Skills 功能。
 
 ### 方式三：让 AI Agent 帮你装
 
@@ -86,23 +104,24 @@ cd CareerForge
 
 ### 安装后的文件结构
 
+以 Claude Code 为例（其他 Agent 结构相同，只是根目录不同）：
+
 ```
-your-project/
-└── skills/
-    ├── job-hunt/            # Skill 1：岗位搜索
-    │   └── SKILL.md
-    ├── resume-match/        # Skill 2：匹配分析
-    │   ├── SKILL.md
-    │   └── references/
-    ├── resume-craft/        # Skill 3：简历生成
-    │   ├── SKILL.md
-    │   ├── templates/       # 7 种 HTML 模板
-    │   ├── scripts/         # PDF 生成 & 照片处理
-    │   └── references/      # 设计规范
-    ├── cover-letter/        # Skill 4：求职信
-    │   └── SKILL.md
-    └── mock-interview/      # Skill 5：模拟面试
-        └── SKILL.md
+~/.claude/skills/
+├── job-hunt/            # Skill 1：岗位搜索
+│   └── SKILL.md
+├── resume-match/        # Skill 2：匹配分析
+│   ├── SKILL.md
+│   └── references/
+├── resume-craft/        # Skill 3：简历生成
+│   ├── SKILL.md
+│   ├── templates/       # 7 种 HTML 模板
+│   ├── scripts/         # PDF 生成 & 照片处理
+│   └── references/      # 设计规范
+├── cover-letter/        # Skill 4：求职信
+│   └── SKILL.md
+└── mock-interview/      # Skill 5：模拟面试
+    └── SKILL.md
 ```
 
 ### 可选依赖
