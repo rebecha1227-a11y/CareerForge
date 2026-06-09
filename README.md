@@ -60,43 +60,53 @@
 
 ## 安装
 
-支持 **8 种 AI Agent 平台**，选你在用的那个就行。
+一条命令，自动适配你的 AI Agent——**不需要针对每个 Agent 单独安装**。
 
-### 方式一：一键安装（推荐）
+### 方式一：npx 一键安装（推荐 ⭐）
 
-运行安装脚本，会自动询问你用的是哪个 Agent，然后装到对应目录：
+```bash
+npx skills add rebecha1227-a11y/CareerForge
+```
+
+> 基于 [Vercel Skills CLI](https://github.com/vercel-labs/skills)，自动检测你安装了哪些 Agent（Claude Code、Codex、Cursor、Gemini CLI、Windsurf 等 **50+ 种**），一次安装全部搞定。
+>
+> 需要 Node.js 18+。没有 Node？用下面的方式二。
+
+**指定安装到某个 Agent：**
+
+```bash
+npx skills add rebecha1227-a11y/CareerForge -a claude-code
+npx skills add rebecha1227-a11y/CareerForge -a codex -a cursor
+```
+
+**全局安装（所有项目可用）：**
+
+```bash
+npx skills add rebecha1227-a11y/CareerForge -g
+```
+
+### 方式二：Shell 脚本安装
 
 ```bash
 curl -sL https://raw.githubusercontent.com/rebecha1227-a11y/CareerForge/main/install.sh | bash
 ```
 
-### 方式二：手动安装（按平台）
+支持 Claude Code、Codex、Cursor、Gemini CLI、Trae、OpenCode、Rovo Dev，自动检测已安装的 Agent。
 
-如果你更喜欢手动操作，先克隆仓库：
+### 方式三：手动安装
 
 ```bash
 git clone https://github.com/rebecha1227-a11y/CareerForge.git
 cd CareerForge
+
+# 复制到你的 Agent 的 skills 目录，例如 Claude Code：
+cp -r skills/* ~/.claude/skills/
+
+# 或 Codex：
+cp -r skills/* ~/.codex/skills/
 ```
 
-然后根据你的 Agent 执行对应命令：
-
-| Agent | 安装命令 |
-|-------|----------|
-| **Claude Code** | `cp -r dist/claude-code/.claude/skills/* ~/.claude/skills/` |
-| **Codex CLI** | `cp -r dist/codex/.codex/skills/* ~/.codex/skills/` |
-| **Cursor** | `cp -r dist/cursor/.cursor your-project/` |
-| **Gemini CLI** | `cp -r dist/gemini/.gemini/skills/* ~/.gemini/skills/` |
-| **Trae（国际版）** | `cp -r dist/trae/.trae/skills/* ~/.trae/skills/` |
-| **Trae（国内版）** | `cp -r dist/trae-cn/.trae-cn/skills/* ~/.trae-cn/skills/` |
-| **OpenCode** | `cp -r dist/opencode/.opencode your-project/` |
-| **Rovo Dev** | `cp -r dist/rovo-dev/.rovodev/skills/* ~/.rovodev/skills/` |
-
-> 💡 **Cursor 用户注意**：需要先在 Settings → Beta 切换到 Nightly 频道，并启用 Agent Skills。
->
-> 💡 **Gemini CLI 用户注意**：需要运行 `/settings` 启用 Skills 功能。
-
-### 方式三：让 AI Agent 帮你装
+### 方式四：让 AI Agent 帮你装
 
 直接把仓库链接发给你的 AI Agent：
 
@@ -104,23 +114,21 @@ cd CareerForge
 
 ### 安装后的文件结构
 
-以 Claude Code 为例（其他 Agent 结构相同，只是根目录不同）：
-
 ```
-~/.claude/skills/
-├── job-hunt/            # Skill 1：岗位搜索
+~/.claude/skills/           # 或你的 Agent 对应的 skills 目录
+├── job-hunt/               # Skill 1：岗位搜索
 │   └── SKILL.md
-├── resume-match/        # Skill 2：匹配分析
+├── resume-match/           # Skill 2：匹配分析
 │   ├── SKILL.md
 │   └── references/
-├── resume-craft/        # Skill 3：简历生成
+├── resume-craft/           # Skill 3：简历生成
 │   ├── SKILL.md
-│   ├── templates/       # 7 种 HTML 模板
-│   ├── scripts/         # PDF 生成 & 照片处理
-│   └── references/      # 设计规范
-├── cover-letter/        # Skill 4：求职信
+│   ├── templates/          # 7 种 HTML 模板
+│   ├── scripts/            # PDF 生成 & 照片处理
+│   └── references/         # 设计规范
+├── cover-letter/           # Skill 4：求职信
 │   └── SKILL.md
-└── mock-interview/      # Skill 5：模拟面试
+└── mock-interview/         # Skill 5：模拟面试
     └── SKILL.md
 ```
 

@@ -6,9 +6,6 @@
 .DS_Store
 *.DS_Store
 
-# 本地安装的 Skills（install.sh 生成，源文件在各 skill 子目录里）
-/skills/
-
 # Claude Code 本地配置
 /.claude/
 
