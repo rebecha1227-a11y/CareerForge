@@ -23,6 +23,7 @@ __pycache__/
 
 # 比赛材料（本地资料，不进公开仓库）
 智联AI创新大赛/
+docs/PPT-Prompt-生成HTML幻灯片.md
 
 # 测试输出（拟真个人数据，不进公开仓库）
 test-output/
