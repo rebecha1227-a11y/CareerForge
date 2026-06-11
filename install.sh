@@ -78,6 +78,13 @@ for entry in "${detected[@]}"; do
 
     # 下载附属文件（如果有的话）
     case "$skill" in
+      job-hunt)
+        mkdir -p "$dest/$skill/references"
+        curl -sL "$REPO_RAW/skills/$skill/references/platforms-cn.md" -o "$dest/$skill/references/platforms-cn.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/platforms-global.md" -o "$dest/$skill/references/platforms-global.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/login-platforms.md" -o "$dest/$skill/references/login-platforms.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/excel-export.md" -o "$dest/$skill/references/excel-export.md" 2>/dev/null || true
+        ;;
       resume-craft)
         mkdir -p "$dest/$skill/references" "$dest/$skill/scripts" "$dest/$skill/templates"
         curl -sL "$REPO_RAW/skills/$skill/references/design-system.md" -o "$dest/$skill/references/design-system.md" 2>/dev/null || true
@@ -89,6 +96,17 @@ for entry in "${detected[@]}"; do
       resume-match)
         mkdir -p "$dest/$skill/references"
         curl -sL "$REPO_RAW/skills/$skill/references/scoring-guide.md" -o "$dest/$skill/references/scoring-guide.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/report-spec.md" -o "$dest/$skill/references/report-spec.md" 2>/dev/null || true
+        ;;
+      mock-interview)
+        mkdir -p "$dest/$skill/references"
+        curl -sL "$REPO_RAW/skills/$skill/references/interview-questions.md" -o "$dest/$skill/references/interview-questions.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/report-spec.md" -o "$dest/$skill/references/report-spec.md" 2>/dev/null || true
+        ;;
+      offer-decision)
+        mkdir -p "$dest/$skill/references"
+        curl -sL "$REPO_RAW/skills/$skill/references/report-spec.md" -o "$dest/$skill/references/report-spec.md" 2>/dev/null || true
+        curl -sL "$REPO_RAW/skills/$skill/references/negotiation-scripts.md" -o "$dest/$skill/references/negotiation-scripts.md" 2>/dev/null || true
         ;;
     esac
   done

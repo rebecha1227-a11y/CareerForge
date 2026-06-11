@@ -31,6 +31,15 @@
 
 ## 🆕 最近更新
 
+**2026-06-11 · job-hunt 重大优化：登录态优先 + 时效过滤 + 质检提速**
+
+- 🏎️ **登录态优先**：选平台时选中 Boss 直聘/拉勾 → 立刻引导登录态搜索，实时数据替代搜索引擎快照，岗位量提升 10 倍以上
+- 🔌 **跨 Agent 插件支持**：Claude Code 用「Claude in Chrome」、Codex 用「Codex for Chrome」，两个插件同等支持；没装插件不会默默降级，会先推荐装插件再问你要不要走 cookies
+- ⏰ **三层时效过滤**：搜索时追加 `after:` 时间戳、评级时标注「⏳ 时效未确认」、质检时并行验证 🟢 链接——实测过期率高达 63% 的猎聘结果被全部剔除
+- ⚡ **质检提速 4x**：链接验证改为 3-5 个并行发起；🟡 岗位不再主动验证，用户感兴趣时再单独查
+- 🐛 **修复 Boss 直聘公司名/薪资抓取**：更新 JS 选择器适配最新页面 DOM，补充全文兜底解析防止再次失效
+- 📦 **Token 瘦身**：4 个 Skill 的大块内容拆分到 `references/` 按需加载，SKILL.md 体积平均减少 50%
+
 **2026-06-10 · 新增第 6 个 Skill：Offer 决策官**
 
 拿到多个 offer 不知道选哪个？AI 帮你：
@@ -138,10 +147,11 @@ cp -r skills/* ~/.codex/skills/
 ```
 ~/.claude/skills/           # 或你的 Agent 对应的 skills 目录
 ├── job-hunt/               # Skill 1：岗位搜索
-│   └── SKILL.md
+│   ├── SKILL.md
+│   └── references/         # 平台清单、登录教程、Excel 规范（按需加载）
 ├── resume-match/           # Skill 2：匹配分析
 │   ├── SKILL.md
-│   └── references/
+│   └── references/         # 评分标准、报告设计规范
 ├── resume-craft/           # Skill 3：简历生成
 │   ├── SKILL.md
 │   ├── templates/          # 7 种 HTML 模板
@@ -150,9 +160,11 @@ cp -r skills/* ~/.codex/skills/
 ├── cover-letter/           # Skill 4：求职信
 │   └── SKILL.md
 ├── mock-interview/         # Skill 5：模拟面试
-│   └── SKILL.md
+│   ├── SKILL.md
+│   └── references/         # 三轮面试题库、报告设计规范
 └── offer-decision/         # Skill 6：Offer 决策官 🆕
-    └── SKILL.md
+    ├── SKILL.md
+    └── references/         # 谈薪话术、报告设计规范
 ```
 
 ### 可选依赖
@@ -209,11 +221,14 @@ AI：→ 从简历提取方向，确认搜索条件（城市、签证需求等�
 这是效果最好的方式——AI 直接在你已经登录好的浏览器里操作，就像有个助手帮你翻页面一样。
 
 **你需要：**
-- Chrome 浏览器 + [Claude Code Chrome 插件](https://chromewebstore.google.com/detail/claude-code/edfhcbmnidfdkgbcgbhcihmlopiaaapo)（免费）
+- Chrome 浏览器 + 对应你用的 Agent 的插件：
+  - Claude Code 用户 → [Claude Code Chrome 插件](https://chromewebstore.google.com/detail/claude-code/edfhcbmnidfdkgbcgbhcihmlopiaaapo)（免费）
+  - Codex 用户 → [Codex for Chrome 插件](https://chromewebstore.google.com/detail/codex/hehggadaopoacecdllhhajmbjkdcmajg)（免费）
+  - 其他 Agent → 配置 Playwright MCP 等浏览器控制工具
 - 在浏览器里提前登录好 Boss 直聘（或其他平台）
 
 **使用步骤：**
-1. 安装 Chrome 插件后，打开 Claude Code，它会自动检测到浏览器连接
+1. 安装对应插件后，打开你的 Agent，它会自动检测到浏览器连接
 2. 跟 AI 说：**"帮我搜一下 Boss 直聘上的岗位"**
 3. AI 会在你的浏览器里自动搜索、翻页、提取岗位信息
 4. 你只需要看着它操作就行，全程不需要手动干预

@@ -75,78 +75,15 @@ description: >
    - Google Jobs
    - Glassdoor
 
-   **中国大陆：**
-   - Boss 直聘（zhipin.com）
-   - 猎聘（liepin.com）
-   - 拉勾（lagou.com）
-   - 智联招聘（zhaopin.com）
-   - 前程无忧（51job.com）
-   - 牛客网内推帖（nowcoder.com）
-   - V2EX 招聘帖
-   - 微信公众号招聘推文
-
-   **澳大利亚：**
-   - Seek Australia（seek.com.au）— 澳洲最大求职平台
-   - Jora（jora.com）
-   - Indeed Australia（au.indeed.com）
-   - Facebook Jobs / Groups — 澳洲很活跃
-
-   **新西兰：**
-   - Seek New Zealand（seek.co.nz）— 独立站点，与澳洲 Seek 分开
-   - Trade Me Jobs（trademe.co.nz）— 新西兰本土最大
-   - Indeed New Zealand
-
-   **美国 / 加拿大：**
-   - ZipRecruiter（ziprecruiter.com）
-   - Monster（monster.com）
-   - Dice（dice.com）— 科技岗专用
-   - USAJobs（usajobs.gov）— 美国政府岗位
-   - AngelList / Wellfound — 创业公司
-
-   **英国：**
-   - Reed（reed.co.uk）
-   - Totaljobs（totaljobs.com）
-   - CV-Library（cv-library.co.uk）
-   - Indeed UK（uk.indeed.com）
-
-   **欧洲（德语区）：**
-   - StepStone（stepstone.de）
-   - XING（xing.com）— 德语区 LinkedIn
-
-   **日本：**
-   - Daijob（daijob.com）— 面向外国人
-   - GaijinPot Jobs（jobs.gaijinpot.com）— 面向外国人
-   - Rikunabi（rikunabi.com）
-
-   **韩国：**
-   - Saramin（saramin.co.kr）— 韩国最大求职平台
-   - JobKorea（jobkorea.co.kr）— 韩国第二大
-   - WorkNet（work.go.kr）— 韩国政府官方平台
-   - People'n Job（peoplenjob.com）— 面向外国人
-
-   **新加坡：**
-   - MyCareersFuture（mycareersfuture.gov.sg）— 政府官方平台
-   - JobStreet Singapore（jobstreet.com.sg）
-
-   **东南亚（马来西亚/菲律宾/印尼等）：**
-   - JobStreet（jobstreet.com）— 覆盖多个东南亚国家
-   - JobsDB（jobsdb.com）— 港澳及东南亚
-
-   **对话示例：**
-   > AI：「你在澳大利亚找工作，以下平台比较常用，想搜哪些？（可多选，或说"全搜"）」
-   > 1. Seek Australia（澳洲最大）
-   > 2. LinkedIn
-   > 3. Indeed Australia
-   > 4. Jora
-   > 5. Glassdoor
-   > 6. Facebook Jobs/Groups
-   >
-   > 用户：「1、2、3」
+   **分地区平台清单（必须先读取再推荐）：**
+   - 用户找中国大陆的工作 → 必须先读取 references/platforms-cn.md
+   - 用户找海外的工作（澳大利亚/新西兰/美国/加拿大/英国/欧洲/日本/韩国/新加坡/东南亚）→ 必须先读取 references/platforms-global.md 的对应地区部分（内含推荐对话示例）
 
    **需要登录的平台处理（中国大陆平台为主）：**
-   - 用户指定 Boss 直聘、拉勾等需要登录的平台 → 引导提供 cookies
-   - 用户有 Chrome MCP → 可以在已登录的浏览器中直接搜索
+   - 用户多选中包含 Boss 直聘、拉勾等需登录平台 → **立刻读取 references/login-platforms.md 并引导登录态流程**，不要等到搜索阶段才处理。登录态数据是实时在线的，质量远高于 WebSearch 快照，应优先走通
+   - 引导顺序按当前环境的能力探测（详见 login-platforms.md）：有浏览器控制 MCP（Chrome MCP / Playwright MCP 等）→ 方式 A；没有 → 方式 B（cookies）；都不行 → 方式 C（手动搜索 + AI 辅助）
    - **主动询问**：「你在 Boss 直聘上有没有已经建好的岗位分组？有的话我可以直接从分组里提取全部岗位，数据量会大很多（通常 300-500 个）」
+   - 用户没选任何登录平台 → 跳过整个登录态流程，直接走免登录 WebSearch
 
 ### 无简历模式
 
@@ -210,85 +147,16 @@ description: >
 
 #### 免登录平台（默认启用）
 
-根据用户选择的平台，使用 WebSearch 搜索。以下按地区列出搜索指令。
+根据用户选择的平台，使用 WebSearch 搜索。
 
-**全球通用平台：**
+**执行搜索前，必须先根据用户选择的地区读取对应的搜索语法文件：**
+- 中国大陆 → 必须先读取 references/platforms-cn.md（含主流平台、企业官方招聘、微信公众号、垂直社区的搜索指令）
+- 海外地区 → 必须先读取 references/platforms-global.md 的对应地区部分（含各地区搜索指令、工签筛选语法、社交平台招聘）
+
+**全球通用平台（所有地区都搜）：**
 - `site:linkedin.com/jobs 岗位名 城市`（LinkedIn）
 - `site:indeed.com 岗位名 城市`（Indeed，自动匹配各国子站）
 - `site:glassdoor.com 岗位名 城市`（Glassdoor）
-
-**中国大陆平台：**
-- `site:zhipin.com 岗位名 城市`（Boss 直聘）
-- `site:lagou.com 岗位名 城市`（拉勾）
-- `site:liepin.com 岗位名 城市`（猎聘）
-- `site:51job.com 岗位名 城市`（前程无忧）
-- `site:zhaopin.com 岗位名 城市`（智联招聘）
-
-**澳大利亚 / 新西兰：**
-- `site:seek.com.au 岗位名 城市`（Seek 澳洲）
-- `site:seek.co.nz 岗位名 城市`（Seek 新西兰，独立站点）
-- `site:trademe.co.nz/a/jobs 岗位名 城市`（Trade Me Jobs，新西兰本土）
-- `site:jora.com 岗位名 城市`（Jora）
-- `site:au.indeed.com 岗位名 城市`（Indeed 澳洲）
-- 如需工签筛选：追加 `"visa sponsorship" OR "sponsor"`
-
-**美国 / 加拿大：**
-- `site:ziprecruiter.com 岗位名 城市`（ZipRecruiter）
-- `site:monster.com 岗位名 城市`（Monster）
-- `site:dice.com 岗位名`（Dice，科技岗专用）
-- `site:usajobs.gov 岗位名`（USAJobs，美国政府岗位）
-- `site:wellfound.com 岗位名`（AngelList/Wellfound，创业公司）
-- 如需工签筛选：追加 `"h1b" OR "visa sponsorship" OR "work authorization"`
-
-**英国：**
-- `site:reed.co.uk 岗位名 城市`（Reed）
-- `site:totaljobs.com 岗位名 城市`（Totaljobs）
-- `site:cv-library.co.uk 岗位名 城市`（CV-Library）
-- 如需工签筛选：追加 `"visa sponsorship" OR "skilled worker visa" OR "sponsorship licence"`
-
-**欧洲（德语区）：**
-- `site:stepstone.de 岗位名 城市`（StepStone）
-- `site:xing.com 岗位名 城市`（XING）
-
-**日本：**
-- `site:daijob.com 岗位名`（Daijob，面向外国人）
-- `site:jobs.gaijinpot.com 岗位名`（GaijinPot Jobs，面向外国人）
-- `site:rikunabi.com 岗位名`（Rikunabi）
-- 如需工签筛选：追加 `"visa support" OR "ビザサポート"`
-
-**韩国：**
-- `site:saramin.co.kr 岗位名`（Saramin，韩国最大）
-- `site:jobkorea.co.kr 岗位名`（JobKorea）
-- `site:work.go.kr 岗位名`（WorkNet，政府官方）
-- `site:peoplenjob.com 岗位名`（People'n Job，面向外国人）
-- 如需工签筛选：追加 `"visa" OR "비자 지원" OR "외국인 가능"`
-
-**新加坡：**
-- `site:mycareersfuture.gov.sg 岗位名`（MyCareersFuture，政府官方）
-- `site:jobstreet.com.sg 岗位名`（JobStreet 新加坡）
-
-**东南亚（马来/菲律宾/印尼等）：**
-- `site:jobstreet.com 岗位名 国家`（JobStreet）
-- `site:jobsdb.com 岗位名 城市`（JobsDB，港澳及东南亚）
-
-**社交平台招聘（海外地区可选）：**
-- `site:facebook.com/jobs 岗位名 城市`（Facebook Jobs）
-- `site:reddit.com 岗位名 hiring 城市`（Reddit 招聘帖）
-
-**中国大陆专属——企业官方招聘：**
-- `岗位名 招聘 城市`（覆盖各公司官网、招聘页）
-- `岗位名 城市 "加入我们"`（企业招聘页常用语）
-- `岗位名 城市 "社会招聘" OR "社招"`
-
-**中国大陆专属——微信公众号招聘推文：**
-- `site:mp.weixin.qq.com 岗位名 招聘 城市`（Google 收录的公众号文章）
-- 搜狗微信搜索：`weixin.sogou.com` 搜索 `岗位名 招聘 城市`（专门搜公众号的搜索引擎）
-- 很多大厂（字节、腾讯、阿里、百度等）的招聘公众号会发岗位推文，这类结果优先级高
-
-**中国大陆专属——垂直社区：**
-- `site:nowcoder.com 岗位名 城市 内推`（牛客网内推帖）
-- `site:v2ex.com 岗位名 招聘`（V2EX 招聘帖）
-- `site:juejin.cn 岗位名 招聘`（掘金社区）
 
 **搜索语言策略：**
 - 中国大陆：中文关键词为主
@@ -301,141 +169,17 @@ description: >
 
 - **并行搜索**：多组关键词同时发起 WebSearch，不要串行等待
 - **去重合并**：同一岗位出现在多个平台，合并保留信息最全的
-- **时效过滤**：优先最近 30 天内发布的岗位，超过 60 天的标注「可能已关闭」
+- **时效过滤（强制）**：WebSearch 搜到的是搜索引擎快照，岗位可能早已下架，必须按以下规则处理：
+  - 每组搜索关键词追加时间限定符 `after:YYYY-MM-DD`（日期取今天往前 30 天），从源头过滤过期快照
+  - 搜索结果摘要中能看到近期日期信号（如「3 days ago」「X天前发布」「2026-XX-XX」）的岗位，才有资格进入 🟢；看不到任何日期信号的最多进入 🟡，并标注「⏳ 时效未确认」
+  - 通过登录态实时抓取（Chrome MCP / cookies）拿到的岗位是平台在线数据，默认在招，不适用以上规则
 - **每组关键词至少看前 2 页结果**，不要只看第 1 条
 
-#### 需登录平台（用户指定时启用）
+#### 需登录平台（用户选中时启用，优先级高于 WebSearch）
 
-当用户明确要求搜索 Boss 直聘、拉勾等平台时：
+用户在平台选择环节选中了 Boss 直聘、拉勾等需登录平台时，**必须先读取 references/login-platforms.md**，获取完整操作教程，包括三种方式：浏览器控制 MCP 辅助（关键词搜索 + 分组批量提取与 AI 智能筛选）、Cookies 导入、用户手动搜索 + AI 辅助。三种方式按环境能力探测依次降级，不绑定特定 AI 产品。
 
-**方式 A：Chrome 浏览器辅助（推荐）**
-
-如果用户有 Chrome MCP 插件：
-1. 确认用户已在浏览器中登录目标平台
-2. 通过 Chrome MCP 工具在用户浏览器中操作
-3. 支持两种搜索模式：
-
-**模式 1：关键词搜索**
-- 导航到搜索页（如 `https://www.zhipin.com/web/geek/jobs?query=关键词&city=城市代码`）
-- 等待页面加载（`wait(3)`）
-- 用 `get_page_text` 提取岗位列表
-
-**模式 2：用户已有分组搜索（推荐，数据量大）**
-
-Boss 直聘等平台允许用户保存岗位分组。如果用户已有分组：
-
-```
-步骤 1：导航到分组
-- navigate 到 https://www.zhipin.com/web/geek/jobs
-- wait(2) 等页面加载
-- find 查找用户指定的分组名称（如"软件项目经理"）
-- left_click 点击分组标签
-
-步骤 2：滚动加载全部岗位
-Boss 直聘是懒加载的，必须反复滚动到页面底部才能加载全部岗位：
-
-javascript_exec:
-  // 反复滚动直到没有新岗位加载
-  let prev = 0;
-  function scrollAll() {
-      return new Promise(resolve => {
-          const interval = setInterval(() => {
-              window.scrollTo(0, document.body.scrollHeight);
-              const current = document.querySelectorAll('.job-card-wrap').length;
-              if (current === prev) {
-                  clearInterval(interval);
-                  resolve(current);
-              }
-              prev = current;
-          }, 2000);
-      });
-  }
-  scrollAll()
-
-注意：一个分组可能有 300-500+ 个岗位，需要多轮滚动（每轮加载约 15 个）。
-
-步骤 3：批量提取岗位数据
-用 JavaScript 一次性提取所有岗位卡片的结构化信息：
-
-javascript_exec:
-  const cards = document.querySelectorAll('.job-card-wrap');
-  const jobs = [];
-  cards.forEach(c => {
-      jobs.push({
-          title: c.querySelector('.job-name')?.textContent?.trim(),
-          company: c.querySelector('.boss-name')?.textContent?.trim(),
-          location: c.querySelector('.company-location')?.textContent?.trim(),
-          exp: c.querySelector('.tag-list li:first-child')?.textContent?.trim(),
-          tags: Array.from(c.querySelectorAll('.tag-list li'))
-                .slice(2).map(s => s.textContent.trim()).join(',')
-      });
-  });
-  window.__jobs = jobs;
-
-数据量大时（41K+ 字符），需要分批读取：slice(0,75)、slice(75,150)...
-
-步骤 4：AI 智能筛选
-提取后不要全部放入 Excel，要根据用户简历和目标方向做匹配筛选。
-
-筛选逻辑是**动态生成**的，不是固定关键词。根据以下流程判断：
-
-1. **从用户简历提取核心画像**：
-   - 目标岗位类型（产品/开发/设计/运营/销售...）
-   - 核心技能关键词（如 Python、Figma、投放、用户增长...）
-   - 行业背景（教育/金融/电商/医疗...）
-   - 语言优势（英语/日语/粤语...）
-   - 经验年限
-
-2. **生成保留规则**（标题或标签命中任一即保留）：
-   - 与目标岗位类型直接相关的职位名称
-   - 与核心技能关键词匹配的岗位
-   - 符合行业背景的岗位
-   - 符合语言优势的岗位（如英语好 → 保留外企/海外相关）
-
-3. **生成排除规则**（标题明确属于其他职能的跳过）：
-   - 与用户目标方向**完全不同职能**的岗位（如用户找产品，则排除纯开发/纯算法/纯运维；用户找开发，则排除纯销售/纯行政）
-   - 纯实习岗（除非用户接受实习）
-   - 用户明确排除的行业或公司类型
-
-4. **灰色地带处理**（标题模糊、看不出是否匹配的）：
-   - 优先保留，放入 🟠 可以尝试
-   - 宁可多给用户看几个不太匹配的，也不要漏掉真正合适的
-```
-
-**方式 B：Cookies 导入**
-
-引导用户导出 cookies：
-
-> 需要你提供 Boss 直聘的登录 cookies，这样我才能帮你搜索。步骤：
->
-> 1. 在 Chrome 里打开 Boss 直聘并确保已登录
-> 2. 安装浏览器插件 **Cookie-Editor**（Chrome 商店可搜到）
-> 3. 打开 Boss 直聘页面，点击 Cookie-Editor 图标
-> 4. 点击「Export」→「Header String」，复制内容发给我
->
-> ⚠️ 提醒：cookies 我只在本次搜索中临时使用，不会保存。但频繁抓取可能触发平台风控，建议适度使用。
-
-拿到 cookies 后，使用 Python 脚本发起请求：
-
-```python
-import requests
-
-def search_zhipin(keywords, city, cookies_str):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 ...',
-        'Cookie': cookies_str
-    }
-    # 构造搜索 URL，发起请求，解析返回的 HTML/JSON
-    # 提取岗位名称、公司、薪资、链接等信息
-```
-
-**方式 C：用户手动搜索 + AI 辅助**
-
-如果用户不想提供 cookies 也没有 Chrome 插件：
-1. 给用户推荐搜索关键词组合
-2. 用户自己在 Boss 直聘搜索
-3. 把感兴趣的 JD 截图或文字发给 AI
-4. AI 进行匹配度分析 + 写打招呼消息
+登录态拿到的岗位是实时在线数据，作为结果主体；WebSearch 快照作为补充扩量。
 
 ---
 
@@ -466,6 +210,13 @@ def search_zhipin(keywords, city, cookies_str):
 
 不满足以上任意一条 → **降级到 🟡 或 🟠**，并标注降级原因。
 
+**时效验证（只针对 WebSearch 来源的岗位，强制执行）：**
+
+- 🟢 岗位**全量验证**：访问岗位链接，确认页面仍在招聘中。页面出现岗位下架标志语（清单见 references/platforms-cn.md 或 references/platforms-global.md 的「岗位下架标志语」部分）→ 直接移除，并在质检摘要中计数
+- 🟡 岗位**不主动验证**，统一标注「⏳ 时效未确认」，用户对某条感兴趣时再单独验证
+- **并行验证（强制）**：链接验证必须 3-5 个一批并行发起 WebFetch，禁止逐条串行等待——串行是质检耗时过长的主要原因
+- 通过登录态实时抓取（浏览器 MCP / cookies）的岗位跳过此步——平台在线数据默认在招
+
 **抽查 🟡 基本匹配的岗位（抽 20%-30%）：**
 
 - 有没有被低估的好岗位？标题不太像但实际很匹配 → **升级到 🟢**
@@ -489,6 +240,7 @@ def search_zhipin(keywords, city, cookies_str):
 质检摘要：
 - 原始 🟢 18 个 → 质检后 🟢 14 个（4 个降级到 🟡）
 - 原始 🟡 35 个 → 抽查 10 个，2 个升级到 🟢，1 个降级到 🟠
+- 时效验证：移除 2 个已下架岗位
 - 去重：移除 3 个重复岗位
 - 最终：🟢 16 / 🟡 32 / 🟠 27，共 75 个
 ```
@@ -561,60 +313,9 @@ def search_zhipin(keywords, city, cookies_str):
 
 ### Excel 导出
 
-搜索完成后，**主动询问用户是否需要导出 Excel 表格**。如果用户需要：
+搜索完成后，**主动询问用户是否需要导出 Excel 表格**。
 
-使用 openpyxl 生成 `.xlsx` 文件（需要先确认用户已安装 `pip3 install openpyxl`），包含以下 13 列：
-
-| 列名 | 说明 |
-|------|------|
-| 编号 | 序号 |
-| 匹配度 | 🟢高度匹配 / 🟡基本匹配 / 🟠可以尝试 |
-| 岗位名称 | 职位标题 |
-| 公司 | 公司名称 |
-| 城市 | 工作地点 |
-| 薪资 | 薪资范围 |
-| 经验要求 | 年限要求 |
-| 匹配点 | 简历中匹配的技能/经历 |
-| 签证/工签 | ✅ 提供担保 / ❓ 未标注 / ❌ 仅限本地身份（海外岗位专用，中国大陆岗位留空） |
-| 标签 | 双休/外企/大厂/远程 等 |
-| 来源平台 | Seek AU/LinkedIn/Indeed 等 |
-| 链接 | 岗位详情 URL |
-| 备注 | 额外信息（如"急招"、"明确写了vibe coding"等） |
-
-**签证/工签列的数据来源：**
-- JD 中明确写了 `visa sponsorship`、`sponsor`、`h1b`、`skilled worker visa`、`482 visa`、`ビザサポート` 等 → 标注 ✅
-- JD 中写了 `must have working rights`、`permanent resident only`、`citizen only` 等 → 标注 ❌
-- JD 中未提及签证相关信息 → 标注 ❓
-- 中国大陆岗位：此列留空（不适用）
-
-**Excel 格式要求：**
-- 表头行：加粗白色字体 + 蓝色背景（`#4472C4`）+ 居中
-- 🟢 行：浅绿底色（`#E8F5E9`）
-- 🟡 行：浅黄底色（`#FFF8E1`）
-- 🟠 行：浅橙底色（`#FFF3E0`）
-- 链接列：蓝色下划线字体
-- 冻结首行 + 启用自动筛选器
-- 列宽：`[5, 10, 40, 18, 18, 16, 10, 36, 14, 18, 14, 32, 30]`
-- 文件名：`岗位搜索结果_国家/城市_日期.xlsx`（海外用户包含国家，如 `岗位搜索结果_AU-Sydney_20260609.xlsx`）
-
-**支持追加模式：**
-
-如果已有 Excel 文件（如用户要求"把 Boss 直聘分组的也加进去"），使用 `load_workbook` 追加：
-
-```python
-from openpyxl import load_workbook
-wb = load_workbook("已有文件.xlsx")
-ws = wb.active
-# 编号从 ws.max_row 开始递增
-# append 新行后，逐行设置填充色和字体
-# 更新 auto_filter.ref 的范围
-wb.save("已有文件.xlsx")
-```
-
-追加时注意：
-- 编号接续已有最大编号
-- 去重：检查岗位名称 + 公司名是否已存在，避免重复添加
-- 来源平台标注区分（如 "Boss直聘·分组" vs "Boss直聘" vs "猎聘"）
+用户需要导出或追加 Excel 时，**必须先读取 references/excel-export.md**，获取 14 列表格定义、签证/工签列标注规则、Excel 格式要求和追加模式的代码规范。
 
 ### 搜不到或搜到很少时
 
