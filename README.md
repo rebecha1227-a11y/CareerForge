@@ -175,6 +175,41 @@ cp -r skills/* ~/.codex/skills/
 | Pillow | 简历照片裁剪压缩 | `pip install Pillow` |
 | openpyxl | 岗位搜索结果导出 Excel | `pip install openpyxl` |
 
+### 技术环境要求
+
+CareerForge 的 6 个 Skill 对 AI Agent 的工具能力有不同程度的依赖。安装前请对照下表确认你的环境：
+
+**各 Skill 的核心依赖：**
+
+| 能力 | 哪些 Skill 需要 | Claude Code | Codex | Cursor / Windsurf / Cline |
+|------|----------------|:-----------:|:-----:|:-------------------------:|
+| 文件读写 + 终端 | 全部 6 个 | ✅ 内置 | ✅ 内置 | ✅ 内置 |
+| **WebSearch**（网络搜索） | job-hunt（核心）、offer-decision（辅助） | ✅ 内置 | ✅ 内置 | ⚠️ 需装 MCP¹ |
+| **WebFetch**（访问网页验证链接） | job-hunt 质检环节 | ✅ 内置 | ✅ 内置 | ⚠️ 需装 MCP¹ |
+| **Subagent**（子任务代理） | job-hunt 质检环节 | ✅ 内置 | ✅ 内置 | ❌ 大多不支持² |
+| 浏览器控制 | job-hunt（Boss 直聘登录态搜索，可选） | ⚠️ 需装插件³ | ⚠️ 需装插件³ | ⚠️ 需装 MCP¹ |
+| Python 执行 | resume-craft（PDF 生成） | ✅ 内置 | ✅ 内置 | ✅ 内置 |
+
+> ¹ Cursor / Windsurf / Cline 可通过安装 MCP Server 补齐能力：网络搜索推荐 [Brave Search MCP](https://github.com/anthropics/model-context-protocol)、网页访问推荐 [Fetch MCP](https://github.com/anthropics/model-context-protocol)、浏览器控制推荐 Playwright MCP。
+>
+> ² Subagent（质检环节用来独立验证搜索结果）目前仅 Claude Code 和 Codex 原生支持。不支持的环境下，job-hunt 仍可正常搜索和输出结果，但会跳过独立质检环节，匹配准确度可能略低。
+>
+> ³ Claude Code 用户装 [Claude in Chrome](https://chromewebstore.google.com/detail/claude-code/edfhcbmnidfdkgbcgbhcihmlopiaaapo)，Codex 用户装 [Codex for Chrome](https://chromewebstore.google.com/detail/codex/hehggadaopoacecdllhhajmbjkdcmajg)。
+
+**关于大模型的选择：**
+
+CareerForge 的 Skill 指令较为复杂（单个 SKILL.md 约 200-400 行），涉及多步骤推理、多工具协调调用。**对底层大模型的指令遵循能力和工具调用（function calling）准确率有较高要求。**
+
+| 模型 | 兼容性 | 说明 |
+|------|:------:|------|
+| Claude Opus / Sonnet | ✅ 推荐 | 指令遵循和工具调用能力最强，CareerForge 原生开发和测试环境 |
+| GPT-5 / GPT-5-mini | ✅ 良好 | Codex 默认模型，工具调用稳定 |
+| DeepSeek V4 | ✅ 可用 | V4 版本工具调用能力大幅提升，与 Claude Opus 持平 |
+| DeepSeek V3 | ⚠️ 有限 | 工具调用准确率约 81.5%，复杂多工具流程（如 job-hunt 的并行搜索 + 质检）可能出错或丢步骤 |
+| 其他小参数模型 | ❌ 不建议 | 可能无法正确解析 SKILL.md 的复杂指令，导致流程中断或输出质量差 |
+
+> **简单说：** resume-craft、cover-letter、mock-interview 这三个 Skill 对模型要求相对宽松，大多数主流模型都能跑。但 **job-hunt**（多平台并行搜索 + 质检）和 **offer-decision**（多维度精算 + 报告生成）流程复杂，建议用 Claude 或 GPT-5 级别的模型。
+
 ---
 
 ## 使用流程
