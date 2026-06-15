@@ -79,9 +79,9 @@ description: >
 - 目标岗位是什么？（如有 JD 请提供）
 - 生成中文简历还是英文简历？是否需要同时生成中英文两版？
 - 是否需要在简历上放照片？（如需要请上传）
-- 选择简历模板风格（展示 7 种选项）：
+- 选择简历模板风格（展示 6 种选项）：
 
-**请从以下 7 种模板中选择你喜欢的风格：**
+**请从以下 6 种模板中选择你喜欢的风格：**
 
 | 编号 | 模板名称 | 风格特点 |
 |------|---------|---------|
@@ -90,12 +90,31 @@ description: >
 | 03 | **Sidebar Navy 深蓝双栏** | 左侧深蓝栏放技能和联系方式，右侧放经历，信息密度高 |
 | 04 | **Sidebar Dark 深灰左栏** | 左侧深灰栏+右侧白底，沉稳大气，适合管理/金融类 |
 | 05 | **Dark Header 深色头部** | 顶部深色块放姓名和联系方式，正文白底，对比醒目 |
-| 06 | **Clean Teal 清新青色** | 白底+青绿色条装饰，清新专业，适合大部分岗位 |
-| 07 | **Elegant 优雅对称** | 居中对称排版，衬线体为主，适合学术/高管/传统行业 |
+| 06 | **Elegant 优雅对称** | 居中对称排版，衬线体为主，适合学术/高管/传统行业 |
 
 如果用户有自己喜欢的配色或强调色，也可以自定义——只需告知偏好颜色，在选定模板基础上替换即可。
 
 > 参考 `templates/CareerForge-模板预览.html` 了解每种模板的视觉效果。如果能在浏览器中打开这个预览页给用户看更好。
+
+- 选择输出格式：
+
+| 格式 | 说明 |
+|------|------|
+| **HTML + PDF**（默认） | 用上面的 6 种 HTML 模板生成，浏览器打开即可导出 PDF |
+| **Word (.docx)** | 生成可编辑的 Word 文件，方便用 Word/WPS 二次修改 |
+| **两种都要** | 同时生成 HTML 和 Word 版本 |
+
+用户选 Word 时，从以下 Word 模板中选择：
+
+| 编号 | Word 模板名称 | 语言 | 风格特点 |
+|------|-------------|------|---------|
+| W1 | **Classic Blue 经典蓝灰** | 中文 | 蓝灰色标题栏，单栏布局，适合大部分岗位 |
+| W2 | **Sidebar Navy 深蓝分栏** | 中文 | 左侧深蓝栏放照片/技能/联系方式，右侧放经历 |
+| W3 | **Translator 翻译简约风** | 中文 | 简洁段落+表格混排，适合翻译/文科类 |
+| W4 | **Traditional 简约英文** | 英文 | 经典单栏，分割线分区，万能学术风 |
+| W5 | **Contempo 钢灰英文** | 英文 | 现代设计，双栏技能区，摘要+经历结构 |
+| W6 | **Executive 米色英文** | 英文 | 商务感表格布局，日期左栏+内容右栏 |
+| W7 | **Refined Black 黑色精致风** | 英文 | 黑色分割线，多板块 CV 格式，内容丰富型 |
 
 ### 第二轮：个人信息
 
@@ -138,7 +157,7 @@ description: >
    - 美化排版
    - 针对特定 JD 优化（需提供 JD）
    - 内容精简
-3. 选择简历模板风格（展示 7 种选项，同路径 A 第一轮的模板表格）。如果用户对原有简历的排版满意只想优化内容，可以跳过此步
+3. 选择简历模板风格（展示 6 种选项，同路径 A 第一轮的模板表格）。如果用户对原有简历的排版满意只想优化内容，可以跳过此步
 4. 询问：是否需要在中文简历优化定稿后，同时生成对应的英文版简历？
 4. 如有目标 JD，自动进行匹配度分析（参考 resume-match 的逻辑），找出需要优化的方向
 5. 列出具体优化方案，等用户确认后再生成
@@ -259,19 +278,75 @@ description: >
 
 生成 HTML 文件后，提醒用户在浏览器中打开查看效果，然后问：
 
-> 「简历已经生成好了，请在浏览器中打开 HTML 文件看一下效果。有什么需要调整的吗？比如内容修改、排版调整、配色更换等。」
+> 「简历已经生成好了，请在浏览器中打开 HTML 文件看一下效果。你可以直接点"编辑模式"在浏览器里修改文字，改完点"导出 PDF"就行。如果需要大的调整（排版、配色、板块增减）告诉我来改。」
 
-用户满意后再生成 PDF。支持多轮迭代修改。
+用户满意后再生成 PDF。支持多轮迭代修改。小改动（改几个字、加一行）用户可以用编辑模式自己改；大改动（换模板、调结构）由 AI 改代码。
 
 ---
 
 ## 技术实现备注
 
 - HTML 模板（Editorial 风格完整参考）位于 `templates/resume-template.html`
-- 7 种模板视觉预览位于 `templates/CareerForge-模板预览.html`
+- 6 种模板视觉预览位于 `templates/CareerForge-模板预览.html`
 - PDF 生成脚本位于 `scripts/generate_pdf.py`（使用 Playwright）
 - 照片处理脚本位于 `scripts/process_photo.py`（使用 PIL）
-- 设计规范（7 种模板详细规范）详见 `references/design-system.md`
+- 设计规范（6 种模板详细规范）详见 `references/design-system.md`
+
+### Word (.docx) 生成
+
+用户选择 Word 输出时，使用 `scripts/fill_docx.py` 脚本填充 Word 模板。
+
+**步骤：**
+
+1. 将简历数据组装成 JSON（结构见下方）
+2. 写入临时 JSON 文件
+3. 调用脚本：`python scripts/fill_docx.py <template_name> <json_path> <output_path>`
+
+**模板名称：**
+- 中文：`cn-classic-blue`、`cn-sidebar-navy`、`cn-translator`
+- 英文：`en-traditional`、`en-contempo`、`en-executive`、`en-refined-black`
+
+**JSON 数据结构：**
+
+```json
+{
+  "name": "姓名",
+  "age": "年龄",
+  "education_level": "学历",
+  "job_target": "求职意向",
+  "phone": "手机号",
+  "email": "邮箱",
+  "wechat": "微信（可选）",
+  "address": "所在城市",
+  "self_evaluation": "自我评价文字",
+  "education": [
+    {
+      "major": "专业",
+      "school": "学校",
+      "degree": "学位",
+      "dates": "起止时间",
+      "courses": "主修课程（可选）"
+    }
+  ],
+  "work_experience": [
+    {
+      "title": "职位",
+      "company": "公司",
+      "dates": "起止时间",
+      "duties": ["职责1", "职责2"]
+    }
+  ],
+  "skills": ["技能类别1：具体技能", "技能类别2：具体技能"],
+  "top_skills": ["核心技能1", "核心技能2", "核心技能3", "核心技能4"],
+  "awards": ["奖项1", "奖项2"]
+}
+```
+
+**注意：** `top_skills` 仅 `cn-sidebar-navy` 模板使用（左侧栏技能条，最多 4 个）；`cn-classic-blue` 使用 `skills` 字段。
+
+**依赖：** python-docx（`pip install python-docx`）
+
+Word 模板文件位于项目根目录 `templates/word/`
 - 如果 Playwright 未安装，提示用户运行：`pip install playwright && playwright install chromium`
 - 如果 PIL 未安装，提示用户运行：`pip install Pillow`
 
@@ -280,16 +355,35 @@ description: >
 无论使用哪种模板风格，生成的 HTML 文件都必须包含：
 
 1. **导出 PDF 按钮**：固定在页面顶部的导出栏（`.export-bar`），点击调用 `window.print()` 触发浏览器原生打印
-2. **`@page` 规则**：设置 `size: A4; margin: 0;`
-3. **打印颜色保留**：`-webkit-print-color-adjust: exact; print-color-adjust: exact;`
-4. **`@media print` 样式**：隐藏导出栏、去掉阴影边距、确保背景色打印、分页控制
-5. **分页控制**：对 section、job、project-card 等元素设置 `page-break-inside: avoid` / `break-inside: avoid`
-6. **两页压缩**：如果内容超出两页，在 `@media print` 中添加字号/间距缩小规则，确保 PDF 严格两页以内
+2. **编辑模式按钮**：在导出栏中，点击可切换浏览器内直接编辑简历文字。编辑时给 `.resume` 加 `contentEditable="true"` 和 `.editing` class，退出编辑后恢复。导出 PDF 前自动退出编辑模式。打印时隐藏编辑按钮
+3. **`@page` 规则**：设置 `size: A4; margin: 0;`
+4. **打印颜色保留**：`-webkit-print-color-adjust: exact; print-color-adjust: exact;`
+5. **`@media print` 样式**：隐藏导出栏、去掉阴影边距、确保背景色打印、分页控制
+6. **分页控制**：对 section、job、project-card 等元素设置 `page-break-inside: avoid` / `break-inside: avoid`
+7. **两页压缩**：如果内容超出两页，在 `@media print` 中添加字号/间距缩小规则，确保 PDF 严格两页以内
+8. **编辑模式自适应**：`.resume.editing` 设置 `overflow: visible`，确保用户添加内容后下方板块自动往下排
 
 导出按钮旁提示用户：**另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」**
 
 ```javascript
+function toggleEdit() {
+  var resume = document.querySelector('.resume');
+  var isEditing = resume.contentEditable === 'true';
+  if (isEditing) {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+  } else {
+    resume.contentEditable = 'true';
+    resume.classList.add('editing');
+  }
+}
 function exportPDF() {
+  // 导出前自动退出编辑模式
+  var resume = document.querySelector('.resume');
+  if (resume.contentEditable === 'true') {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+  }
   window.print();
 }
 ```

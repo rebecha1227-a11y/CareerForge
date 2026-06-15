@@ -74,6 +74,49 @@
 
   .export-hint { color: rgba(255,255,255,0.5); font-size: 13px; }
 
+  .edit-btn {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 10px 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .edit-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  .edit-btn.active {
+    background: var(--accent-warm);
+    color: #1a1f2e;
+    border-color: var(--accent-warm);
+  }
+
+  .edit-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+  .resume.editing {
+    outline: 2px dashed var(--accent);
+    outline-offset: 4px;
+    overflow: visible;
+  }
+
+  .resume.editing *:hover {
+    outline: 1px dashed rgba(45, 107, 95, 0.3);
+    outline-offset: 1px;
+  }
+
   /* ========== LOADING OVERLAY ========== */
   .loading-overlay {
     display: none;
@@ -559,6 +602,7 @@
       background: var(--cream) !important;
     }
     .export-bar { display: none !important; }
+    .edit-btn { display: none !important; }
     .loading-overlay { display: none !important; }
     .resume { margin: 0; box-shadow: none; max-width: 100%; background: var(--cream); }
     .project-card:hover { transform: none; box-shadow: none; }
@@ -595,6 +639,10 @@
 
 <!-- Export Bar -->
 <div class="export-bar" id="exportBar">
+  <button class="edit-btn" id="editBtn" onclick="toggleEdit()">
+    <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+    <span id="editBtnText">编辑模式</span>
+  </button>
   <button class="export-btn" onclick="exportPDF()">
     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6zm5-6v4h2v-4h3l-4-4-4 4h3z"/></svg>
     {{EXPORT_BUTTON_TEXT}}
@@ -722,7 +770,33 @@
 </div>
 
 <script>
+function toggleEdit() {
+  var resume = document.getElementById('resume');
+  var btn = document.getElementById('editBtn');
+  var btnText = document.getElementById('editBtnText');
+  var isEditing = resume.contentEditable === 'true';
+
+  if (isEditing) {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+    btn.classList.remove('active');
+    btnText.textContent = '编辑模式';
+  } else {
+    resume.contentEditable = 'true';
+    resume.classList.add('editing');
+    btn.classList.add('active');
+    btnText.textContent = '退出编辑';
+  }
+}
+
 function exportPDF() {
+  var resume = document.getElementById('resume');
+  if (resume.contentEditable === 'true') {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+    document.getElementById('editBtn').classList.remove('active');
+    document.getElementById('editBtnText').textContent = '编辑模式';
+  }
   window.print();
 }
 </script>

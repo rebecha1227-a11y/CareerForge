@@ -31,6 +31,15 @@
 
 ## 🆕 最近更新
 
+**2026-06-16 · resume-craft 升级：浏览器编辑模式 + Word 模板**
+
+- ✏️ **HTML 简历支持浏览器内编辑**：生成的简历新增「编辑模式」按钮，点击后可直接在浏览器里修改文字，改完点「导出 PDF」即可。小改动不用再找 AI，自己改更快
+- 📄 **新增 7 种 Word 模板**：3 种中文（经典蓝灰、深蓝分栏、翻译简约）+ 4 种英文（简约、钢灰、米色商务、黑色精致），用 python-docx 自动填充，生成可编辑的 .docx 文件
+- 🎨 **HTML 模板精简为 6 种**：移除 Clean Teal 模板，保留 6 种更有特色的设计风格
+- 📁 **文件架构优化**：Word 模板独立存放在 `templates/word/` 目录，不与 Skill 代码混在一起
+
+---
+
 **2026-06-11 · job-hunt 重大优化：登录态优先 + 时效过滤 + 质检提速**
 
 - 🏎️ **登录态优先**：选平台时选中 Boss 直聘/拉勾 → 立刻引导登录态搜索，实时数据替代搜索引擎快照，岗位量提升 10 倍以上
@@ -72,7 +81,7 @@
 |-------|------|----------|
 | **job-hunt** | AI 岗位猎手，30+ 平台覆盖全球 10 个地区，支持签证担保筛选、多语言搜索、Boss 直聘联动，输出 Excel | `/job-hunt` 或 "帮我找工作" |
 | **resume-match** | 简历 × JD 智能匹配分析，输出匹配度评分与优化建议 | `/resume-match` 或 "帮我分析简历匹配度" |
-| **resume-craft** | 多模板简历生成与优化，7 种专业排版，输出 HTML + PDF | `/resume-craft` 或 "帮我做一份简历" |
+| **resume-craft** | 多模板简历生成与优化，6 种 HTML 模板 + 7 种 Word 模板，支持浏览器内编辑，输出 HTML + PDF + Word | `/resume-craft` 或 "帮我做一份简历" |
 | **cover-letter** | 求职信 & 招聘软件打招呼消息生成 | `/cover-letter` 或 "帮我写求职信" |
 | **mock-interview** | 三轮 AI 模拟面试 + 逐题反馈报告 | `/mock-interview` 或 "帮我模拟面试" |
 | **offer-decision** 🆕 | 多 Offer 横向对比 + 六维度雷达图 + 薪资谈判话术 | `/offer-decision` 或 "帮我选 offer" |
@@ -162,8 +171,8 @@ cp -r skills/* ~/.codex/skills/
 │   └── references/         # 评分标准、报告设计规范
 ├── resume-craft/           # Skill 3：简历生成
 │   ├── SKILL.md
-│   ├── templates/          # 7 种 HTML 模板
-│   ├── scripts/            # PDF 生成 & 照片处理
+│   ├── templates/          # 6 种 HTML 模板预览 + 参考模板
+│   ├── scripts/            # PDF 生成 & 照片处理 & Word 填充
 │   └── references/         # 设计规范
 ├── cover-letter/           # Skill 4：求职信
 │   └── SKILL.md
@@ -181,6 +190,7 @@ cp -r skills/* ~/.codex/skills/
 |------|------|----------|
 | Playwright | 后台生成 PDF（不装也能用浏览器导出） | `pip install playwright && playwright install chromium` |
 | Pillow | 简历照片裁剪压缩 | `pip install Pillow` |
+| python-docx | 生成 Word 格式简历 | `pip install python-docx` |
 | openpyxl | 岗位搜索结果导出 Excel | `pip install openpyxl` |
 
 ### 技术环境要求
@@ -353,18 +363,17 @@ AI：→ 输出多维度匹配评分（硬技能、软技能、经验、教育�
 AI：你是想从零做一份新简历，还是优化已有简历？
 你：从零做
 AI：[通过对话收集你的经历、技能、教育等信息]
-AI：推荐 3 种适合你的模板风格，你选哪个？
-你：第一个
-AI：→ 生成完整的 HTML 简历
+AI：选择输出格式（HTML / Word / 两种都要）和模板风格
+你：HTML，Dark Header 模板
+AI：→ 生成完整的 HTML 简历（含「编辑模式」和「导出 PDF」按钮）
+   → 浏览器中可直接编辑文字，小改动自己改更快
    → 自动生成 PDF 文件
-   → 内置导出按钮，也可以在浏览器中手动导出
+   → 也可选 Word 格式，生成可编辑的 .docx 文件
 ```
 
 **生成的简历效果：**
 
-| Editorial 杂志编辑风 | Sidebar Navy 深蓝双栏 |
-|:---:|:---:|
-| ![Editorial 简历示例](docs/images/demo-resume-editorial.png) | ![Sidebar Navy 简历示例](docs/images/demo-resume-sidebar-navy.png) |
+![简历生成示例](docs/images/demo-output-resume.png)
 
 ### 💌 Skill 4：求职信（cover-letter）
 
@@ -442,9 +451,9 @@ AI：→ 六维度评分对比（经济价值、成长价值、平台价值、�
 
 ---
 
-## 7 种简历模板
+## 简历模板
 
-![7种模板预览](docs/images/templates-overview.png)
+### 6 种 HTML 模板
 
 | 编号 | 模板 | 风格 | 适合 |
 |:---:|------|------|------|
@@ -453,10 +462,23 @@ AI：→ 六维度评分对比（经济价值、成长价值、平台价值、�
 | 03 | Sidebar Navy 深蓝双栏 | 左侧深蓝栏，信息密度高 | 技术 / 产品 |
 | 04 | Sidebar Dark 深灰左栏 | 沉稳大气 | 管理 / 金融 / 咨询 |
 | 05 | Dark Header 深色头部 | 顶部深色块，对比醒目 | 互联网 / 创业公司 |
-| 06 | Clean Teal 清新青色 | 白底 + 青绿色条 | 万能模板 |
-| 07 | Elegant 优雅对称 | 居中对称，衬线体 | 学术 / 高管 / 传统行业 |
+| 06 | Elegant 优雅对称 | 居中对称，衬线体 | 学术 / 高管 / 传统行业 |
 
-所有模板支持自定义配色 —— 告诉 AI 你喜欢的颜色就行。
+所有 HTML 模板支持：浏览器内编辑模式 + 一键导出 PDF + 自定义配色。
+
+### 7 种 Word 模板
+
+| 编号 | 模板 | 语言 | 风格 |
+|:---:|------|:---:|------|
+| W1 | Classic Blue 经典蓝灰 | 中文 | 蓝灰色标题栏，单栏布局 |
+| W2 | Sidebar Navy 深蓝分栏 | 中文 | 左侧深蓝栏放照片/技能 |
+| W3 | Translator 翻译简约风 | 中文 | 简洁段落+表格混排 |
+| W4 | Traditional 简约英文 | 英文 | 经典单栏，分割线分区 |
+| W5 | Contempo 钢灰英文 | 英文 | 现代设计，双栏技能区 |
+| W6 | Executive 米色英文 | 英文 | 商务感表格布局 |
+| W7 | Refined Black 黑色精致风 | 英文 | 黑色分割线，多板块 CV 格式 |
+
+Word 模板生成可编辑的 .docx 文件，用 Word / WPS 打开即可二次修改。
 
 ---
 

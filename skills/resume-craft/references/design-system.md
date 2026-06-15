@@ -1,6 +1,6 @@
-# CareerForge 设计规范 — 7 种简历模板
+# CareerForge 设计规范 — 6 种简历模板
 
-本文件定义了 7 种简历模板的视觉规范。生成 HTML 简历时，根据用户选择的模板风格，严格遵循对应规范。
+本文件定义了 6 种简历模板的视觉规范。生成 HTML 简历时，根据用户选择的模板风格，严格遵循对应规范。
 
 视觉预览参考：`templates/CareerForge-模板预览.html`
 结构代码参考：`templates/resume-template.html`（Editorial 风格的完整实现）
@@ -56,19 +56,49 @@
 | 形状 | 圆角矩形 border-radius: 4px | 圆形 border-radius: 50% |
 | 边框 | 1px solid var(--border) | 1.5px solid 对应色 |
 
-### 导出按钮（所有模板必须包含）
+### 导出按钮与编辑模式（所有模板必须包含）
 
 - 固定在页面顶部的导出栏（`.export-bar`）
 - 深色半透明背景
-- 强调色按钮
-- 点击调用 `window.print()`（浏览器原生打印，生成可选中、可搜索的真文字 PDF）
+- **导出 PDF 按钮**：强调色按钮，点击调用 `window.print()`（浏览器原生打印，生成可选中、可搜索的真文字 PDF）
+- **编辑模式按钮**（`.edit-btn`）：点击切换浏览器内直接编辑文字，再点退出编辑。按钮需要 `white-space: nowrap; flex-shrink: 0` 防止文字竖排
 - 按钮旁提示文字：`⚠️ 打印对话框中请选：另存为 PDF → 纸张 A4 → 边距「无」→ 勾选「背景图形」`
 - **不使用 html2pdf.js**（html2pdf.js 生成的是图片式 PDF，文字不可选中）
 
-### 导出 JS（所有模板通用）
+### 编辑模式样式
+
+```css
+.resume.editing {
+  overflow: visible; /* 内容增多时自动撑开，不截断 */
+}
+```
+
+编辑模式下用户可以直接修改简历文字，内容变多时下方板块自动往下排。打印时编辑按钮隐藏（`@media print { .edit-btn { display: none !important; } }`）。
+
+### 导出与编辑 JS（所有模板通用）
 
 ```javascript
+function toggleEdit() {
+  var resume = document.querySelector('.resume');
+  var btnText = document.getElementById('editBtnText');
+  var isEditing = resume.contentEditable === 'true';
+  if (isEditing) {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+    btnText.textContent = '编辑模式';
+  } else {
+    resume.contentEditable = 'true';
+    resume.classList.add('editing');
+    btnText.textContent = '退出编辑';
+  }
+}
 function exportPDF() {
+  var resume = document.querySelector('.resume');
+  if (resume.contentEditable === 'true') {
+    resume.contentEditable = 'false';
+    resume.classList.remove('editing');
+    document.getElementById('editBtnText').textContent = '编辑模式';
+  }
   window.print();
 }
 ```
@@ -116,7 +146,7 @@ function exportPDF() {
 }
 ```
 
-> `[模板背景色]` 替换为对应模板的背景色：Editorial `#faf9f7`、Minimal `#ffffff`、Sidebar Navy/Dark 主区 `#ffffff`、Dark Header `#ffffff`、Clean Teal `#ffffff`、Elegant `#fcfcfa`。
+> `[模板背景色]` 替换为对应模板的背景色：Editorial `#faf9f7`、Minimal `#ffffff`、Sidebar Navy/Dark 主区 `#ffffff`、Dark Header `#ffffff`、Elegant `#fcfcfa`。
 
 ---
 
@@ -359,46 +389,7 @@ Google Fonts: DM Sans, Noto Sans SC
 
 ---
 
-## 模板 06：Clean Teal 清新青色
-
-**关键词**：清新、专业、通用性强
-**适合**：大部分岗位，万能模板
-**布局**：单栏
-
-### 字体
-
-```
-Google Fonts: Source Sans 3, Noto Sans SC
-
---sans: 'Source Sans 3', 'Noto Sans SC', sans-serif;
-```
-
-### 配色
-
-```css
-:root {
-  --ink: #333333;
-  --ink-light: #555555;
-  --ink-muted: #999999;
-  --accent: #3a8f7f;
-  --accent-light: #e8f5f1;
-  --bg: #ffffff;
-  --border: #eeeeee;
-}
-```
-
-### 特征元素
-
-- 页面背景：纯白
-- 头部底部：2px `accent` 色分割线
-- Section 标题：**全宽色条**——`accent` 色背景 + 白色文字 + 左右 padding 负值延伸到边缘
-- 项目卡片：左侧 2px `accent` 色边线 + 左 padding
-- 技能标签：浅绿底 `#e8f5f1`
-- 整体比 Editorial 更现代、更干净
-
----
-
-## 模板 07：Elegant 优雅对称
+## 模板 06：Elegant 优雅对称
 
 **关键词**：精致、传统、学术感
 **适合**：学术、高管、传统行业、法律/财务
