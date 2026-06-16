@@ -23,7 +23,7 @@
 
 **AI 驱动的求职全链路工具包** · 从岗位搜索到模拟面试再到 Offer 谈薪 · 开源免费
 
-兼容所有支持 Skills 的 AI Agent（Claude Code、Codex 等）
+推荐在 Claude Code（Claude 模型）或 Codex（GPT 模型）上使用。job-hunt Skill 依赖联网搜索工具，使用第三方模型时可能受限——详见[兼容性说明](#%EF%B8%8F-兼容性说明ai-agent-与模型选择)
 
 </div>
 
@@ -193,6 +193,61 @@ cp -r skills/* ~/.codex/skills/
 | python-docx | 生成 Word 格式简历 | `pip install python-docx` |
 | openpyxl | 岗位搜索结果导出 Excel | `pip install openpyxl` |
 
+### ⚠️ 兼容性说明：AI Agent 与模型选择
+
+#### 各 Skill 对联网工具的依赖
+
+| Skill | 是否需要联网工具 | 具体依赖 | 不联网能用吗？ |
+|-------|---------------|---------|-------------|
+| **job-hunt** | 🔴 **强依赖** | `web_search` + `web_fetch` | ❌ 核心功能不可用 |
+| **resume-match** | 🟢 不需要 | 仅处理用户上传的简历和 JD | ✅ 完全可用 |
+| **resume-craft** | 🟢 不需要 | 仅生成本地文件 | ✅ 完全可用 |
+| **cover-letter** | 🟢 不需要 | 仅文本生成 | ✅ 完全可用 |
+| **mock-interview** | 🟢 不需要 | 仅对话模拟 | ✅ 完全可用 |
+
+> 💡 **简单来说：** 除了 job-hunt 以外的 4 个 Skill 不依赖联网，在任何模型/Agent 组合下都能正常使用。job-hunt 是唯一需要关注兼容性的 Skill。
+
+---
+
+#### 推荐的 Agent × 模型组合
+
+**✅ 完全兼容（推荐）**
+
+| Agent | 模型 | job-hunt 可用？ | 说明 |
+|-------|------|---------------|------|
+| **Claude Code** | Claude 系列（Sonnet/Opus） | ✅ | 原生支持 `web_search` 和 `web_fetch`，**推荐首选** |
+| **Codex CLI** | GPT-5.x 系列 | ✅ | Codex 内置 web search（走 OpenAI 搜索缓存） |
+
+**⚠️ 部分兼容 / 需注意**
+
+| Agent | 模型 | job-hunt 可用？ | 问题 |
+|-------|------|---------------|------|
+| **Claude Code** | DeepSeek V4 | ❌ 大概率失败 | DeepSeek API 不支持 `tool_choice` 参数，`web_search` 和 `web_fetch` 调用时会返回 400 错误（[已知 issue](https://github.com/deepseek-ai/awesome-deepseek-integration/issues/606)）。其他 4 个不需要联网的 Skill 正常可用 |
+| **Claude Code** | 其他第三方模型 | ❌ 大概率失败 | 大多数第三方模型的 Anthropic 兼容端点未完整实现工具调用协议 |
+| **Codex 桌面版/CLI** | DeepSeek / 第三方模型 | ❌ 不可用 | Codex 要求 Responses API 协议，DeepSeek 仅支持 Chat Completions，需要中间代理（如 OpenRouter、Moon Bridge）转换，且工具调用稳定性不保证 |
+
+**🔧 如果你一定要用第三方模型**
+
+如果因为成本等原因需要使用 DeepSeek 等第三方模型，建议：
+
+1. **混合使用策略**：job-hunt 用 Claude/GPT 原生模型（确保搜索功能），其他 4 个 Skill 用第三方模型省钱
+2. **Claude Code + DeepSeek 的降级方案**：跳过 job-hunt 的自动搜索，手动提供 JD 给其他 Skill 使用
+3. **关注上游修复**：DeepSeek 的 `tool_choice` 支持问题正在社区反馈中，未来版本可能修复
+
+---
+
+#### 为什么会有这个限制？
+
+`web_search` 和 `web_fetch` 不是模型自身的能力，而是 **Agent 框架（如 Claude Code）通过 API 提供的服务端工具**。当你把模型从 Claude 换成第三方模型时：
+
+- 请求不再发送到 Anthropic 的服务器，而是发到第三方 API
+- 第三方 API 需要自己实现这些工具的处理逻辑
+- 目前大多数第三方模型的兼容层**没有完整实现工具调用的所有参数**（如 `tool_choice`），导致搜索类工具调用失败
+
+> 这不是 CareerForge 的问题，而是整个 AI Agent 生态在模型互操作性上的现状。随着各家 API 兼容性的提升，这个限制预计会逐步缓解。
+
+---
+
 ### 技术环境要求
 
 CareerForge 的 6 个 Skill 对 AI Agent 的工具能力有不同程度的依赖。安装前请对照下表确认你的环境：
@@ -235,6 +290,8 @@ CareerForge 的 Skill 指令较为复杂（单个 SKILL.md 约 200-400 行），
 安装完成后，打开 Claude Code（或其他支持 Skills 的 AI Agent），用自然语言或斜杠命令触发对应 Skill。
 
 ### 🔍 Skill 1：岗位搜索（job-hunt）
+
+> ⚠️ 此 Skill 需要 `web_search` 工具支持。请确保使用 Claude Code + Claude 模型或 Codex + GPT 模型，使用第三方模型（如 DeepSeek）时搜索功能可能不可用。详见[兼容性说明](#%EF%B8%8F-兼容性说明ai-agent-与模型选择)。
 
 ```
 你：/job-hunt（或"帮我找工作"、"搜一下合适的岗位"）

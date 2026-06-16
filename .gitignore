@@ -34,6 +34,11 @@ HANDOVER.md
 test-output/
 output/
 
+# 本地爬虫脚本和教程（不进公开仓库）
+scripts/boss_api_crawler.py
+scripts/小红书爬虫教程.md
+chrome_data/
+
 # Word 模板（暂无填充功能，不进仓库）
 templates/word/cn-免费简历模板下载.docx
 templates/word/cn-医学人才专属简历模板.docx
